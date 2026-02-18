@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import {
   FaFacebookF,
   FaInstagram,
@@ -6,14 +7,23 @@ import {
 } from "react-icons/fa6";
 
 const Footer = () => {
-  const isMobile = window.innerWidth < 768;
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <footer
       style={{
-        background: "#111827",
+        background: "#0f172a",
         color: "#fff",
-        padding: "50px 20px 20px",
+        padding: "60px 20px 20px",
         marginTop: "auto",
       }}
     >
@@ -23,45 +33,53 @@ const Footer = () => {
           margin: "0 auto",
         }}
       >
+        {/* Top Section */}
         <div
           style={{
             display: "flex",
             flexDirection: isMobile ? "column" : "row",
             justifyContent: "space-between",
+            alignItems: "flex-start",
             gap: "40px",
           }}
         >
-          <div style={{ flex: 1 }}>
+          {/* Logo & Description */}
+          <div
+            style={{
+              flex: isMobile ? "100%" : "0 0 35%",
+            }}
+          >
             <div
               style={{
-                fontSize: "24px",
+                fontSize: "26px",
                 fontWeight: "700",
-                marginBottom: "12px",
+                marginBottom: "15px",
               }}
             >
-              <span style={{ color: "#1e40af" }}>Ticket</span>
-              <span style={{ color: "#dc2626" }}>map</span>
+              <span style={{ color: "#2563eb" }}>Ticket</span>
+              <span style={{ color: "#ef4444" }}>map</span>
             </div>
 
             <p
               style={{
                 color: "#9ca3af",
                 fontSize: "14px",
-                lineHeight: "1.6",
-                maxWidth: "300px",
+                lineHeight: "1.7",
+                maxWidth: "320px",
               }}
             >
-              Your trusted platform for lottery tickets,
-              draws and real-time results.
+              Your trusted platform for lottery tickets, draws
+              and real-time results.
             </p>
           </div>
 
+          {/* Links */}
           <div
             style={{
-              flex: 1,
+              flex: isMobile ? "100%" : "0 0 30%",
               display: "flex",
               flexDirection: "column",
-              gap: "10px",
+              gap: "12px",
               fontSize: "14px",
             }}
           >
@@ -78,9 +96,10 @@ const Footer = () => {
                 style={{
                   color: "#d1d5db",
                   textDecoration: "none",
+                  transition: "0.3s",
                 }}
                 onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "#fff")
+                  (e.currentTarget.style.color = "#ffffff")
                 }
                 onMouseLeave={(e) =>
                   (e.currentTarget.style.color = "#d1d5db")
@@ -91,13 +110,15 @@ const Footer = () => {
             ))}
           </div>
 
+          {/* Social Icons */}
           <div
             style={{
-              flex: 1,
+              flex: isMobile ? "100%" : "0 0 30%",
               display: "flex",
               justifyContent: isMobile ? "flex-start" : "flex-end",
               alignItems: "flex-start",
               gap: "15px",
+              marginTop: isMobile ? "10px" : "0px",
             }}
           >
             {[FaFacebookF, FaInstagram, FaXTwitter].map(
@@ -105,9 +126,9 @@ const Footer = () => {
                 <div
                   key={index}
                   style={{
-                    width: "40px",
-                    height: "40px",
-                    background: "#1f2937",
+                    width: "42px",
+                    height: "42px",
+                    background: "#1e293b",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -119,7 +140,7 @@ const Footer = () => {
                     (e.currentTarget.style.background = "#2563eb")
                   }
                   onMouseLeave={(e) =>
-                    (e.currentTarget.style.background = "#1f2937")
+                    (e.currentTarget.style.background = "#1e293b")
                   }
                 >
                   <Icon size={16} color="#fff" />
@@ -128,11 +149,13 @@ const Footer = () => {
             )}
           </div>
         </div>
+
+        {/* Bottom Section */}
         <div
           style={{
-            borderTop: "1px solid #374151",
-            marginTop: "40px",
-            paddingTop: "15px",
+            borderTop: "1px solid #1f2937",
+            marginTop: "50px",
+            paddingTop: "20px",
             textAlign: "center",
             fontSize: "13px",
             color: "#9ca3af",

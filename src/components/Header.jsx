@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import {
   FaBell,
@@ -16,22 +16,22 @@ import {
 import logo from "../assets/logo.png";
 
 const Header = () => {
-
-  const [showDropdown, setShowDropdown] = useState(false);
+  const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
+  const [showDropdown, setShowDropdown] = useState(false);
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState("Detecting...");
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   const isMobile = screenWidth < 768;
-
+  
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
+  
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -43,12 +43,7 @@ const Header = () => {
               `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
             );
             const data = await res.json();
-            console.log(data.display_name, 'kk');
-
-            const city =
-              data.display_name
-
-            setLocation(city || "Unknown");
+            setLocation(data.display_name || "Unknown");
           } catch {
             setLocation("Location Error");
           }
@@ -57,7 +52,7 @@ const Header = () => {
       );
     }
   }, []);
-
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -68,7 +63,6 @@ const Header = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
 
   return (
     <header
@@ -87,6 +81,7 @@ const Header = () => {
           alignItems: "center",
           justifyContent: "space-between",
           gap: "10px",
+          flexWrap: "wrap",
         }}
       >
         <Link
@@ -96,6 +91,7 @@ const Header = () => {
             alignItems: "center",
             gap: "6px",
             textDecoration: "none",
+            flexShrink: 0,
           }}
         >
           <img src={logo} alt="Logo" style={{ height: "35px" }} />
@@ -107,7 +103,7 @@ const Header = () => {
             </span>
           )}
         </Link>
-
+      
         {!isMobile && (
           <div
             style={{
@@ -116,6 +112,7 @@ const Header = () => {
               gap: "15px",
               flex: 1,
               justifyContent: "center",
+              minWidth: 0,
             }}
           >
             <div
@@ -145,8 +142,8 @@ const Header = () => {
                 {location}
               </span>
             </div>
-
-            <div style={{ position: "relative", width: "40%" }}>
+           
+            <div style={{ position: "relative", width: "40%", minWidth: "200px" }}>
               <FaSearch
                 style={{
                   position: "absolute",
@@ -167,18 +164,19 @@ const Header = () => {
                   borderRadius: "25px",
                   border: "none",
                   outline: "none",
+                  boxSizing: "border-box",
                 }}
               />
             </div>
           </div>
         )}
-
-
+       
         <div
           style={{
             display: "flex",
             alignItems: "center",
             gap: "15px",
+            flexShrink: 0,
           }}
         >
           <div style={{ position: "relative" }}>
@@ -198,11 +196,8 @@ const Header = () => {
               3
             </span>
           </div>
-
-          <div
-            ref={dropdownRef}
-            style={{ position: "relative" }}
-          >
+          
+          <div ref={dropdownRef} style={{ position: "relative" }}>
             <FaUserCircle
               size={22}
               style={{ cursor: "pointer" }}
@@ -225,7 +220,7 @@ const Header = () => {
                 }}
               >
                 {[
-                  { label: "Login", icon: <FaSignInAlt /> },
+                  { label: "Login", icon: <FaSignInAlt />, path: "/login" },
                   { label: "Ticket", icon: <FaTicketAlt /> },
                   { label: "Result", icon: <FaChartBar /> },
                   { label: "Roles", icon: <FaUserShield /> },
@@ -244,7 +239,7 @@ const Header = () => {
                       fontSize: "14px",
                       color: item.danger ? "#dc2626" : "#111",
                       borderBottom:
-                        index !== 5 ? "1px solid #f1f1f1" : "none",
+                        index !== 6 ? "1px solid #f1f1f1" : "none",
                     }}
                     onMouseEnter={(e) =>
                       (e.currentTarget.style.background = "#f9fafb")
@@ -254,7 +249,7 @@ const Header = () => {
                     }
                     onClick={() => {
                       setShowDropdown(false);
-                      console.log(item.label);
+                      if (item.path) navigate(item.path);
                     }}
                   >
                     <span style={{ fontSize: "16px" }}>{item.icon}</span>
@@ -264,12 +259,11 @@ const Header = () => {
               </div>
             )}
           </div>
-
         </div>
       </div>
-
+     
       {isMobile && (
-        <div style={{ marginTop: "12px" }}>
+        <div style={{ marginTop: "12px", width: "100%" }}>
           <div
             style={{
               display: "flex",
@@ -277,13 +271,24 @@ const Header = () => {
               gap: "6px",
               marginBottom: "10px",
               fontSize: "14px",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
             }}
           >
             <FaMapMarkerAlt color="#f97316" />
-            {location}
+            <span
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {location}
+            </span>
           </div>
-
-          <div style={{ position: "relative" }}>
+          
+          <div style={{ position: "relative", width: "100%" }}>
             <FaSearch
               style={{
                 position: "absolute",
@@ -304,6 +309,7 @@ const Header = () => {
                 borderRadius: "25px",
                 border: "none",
                 outline: "none",
+                boxSizing: "border-box",
               }}
             />
           </div>

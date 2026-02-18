@@ -151,24 +151,15 @@ const Home = () => {
                     padding: "30px 15px",
                 }}
             >
-                <div
-                    style={{
-                        maxWidth: "1100px",
-                        margin: "0 auto",
-                        background: "#fff",
-                        borderRadius: "16px",
-                        padding: "25px",
-                    }}
-                >
+                <div>
                     <h3 style={{ marginBottom: "20px" }}>
                         Featured Shops Near You
                     </h3>
-
-                    {/* GRID WRAPPER */}
+                  
                     <div
                         style={{
-                            display: "flex",
-                            flexWrap: "wrap",
+                            display: "grid",
+                            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
                             gap: "20px",
                         }}
                     >
@@ -185,23 +176,18 @@ const Home = () => {
                             <div
                                 key={index}
                                 style={{
-                                    flex: isMobile ? "100%" : "48%", // 🔥 KEY LINE
                                     background: "#f9fafb",
                                     padding: "18px",
                                     borderRadius: "14px",
                                     boxShadow: "0 6px 20px rgba(0,0,0,0.05)",
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    gap: "15px",
                                 }}
                             >
-                                {/* LEFT */}
                                 <div
                                     style={{
                                         display: "flex",
                                         gap: "15px",
                                         alignItems: "center",
+                                        marginBottom: "15px",
                                     }}
                                 >
                                     <img
@@ -222,59 +208,59 @@ const Home = () => {
 
                                         <p
                                             style={{
-                                                margin: "0 0 8px 0",
+                                                margin: 0,
                                                 color: "#64748b",
                                                 fontSize: "14px",
                                             }}
                                         >
                                             {shop.location}
                                         </p>
-
-                                        <div
-                                            style={{
-                                                display: "flex",
-                                                gap: "10px",
-                                                flexWrap: "wrap",
-                                            }}
-                                        >
-                                            <span
-                                                style={{
-                                                    background: "#fde68a",
-                                                    padding: "5px 10px",
-                                                    borderRadius: "20px",
-                                                    fontSize: "12px",
-                                                }}
-                                            >
-                                                Tickets Available
-                                            </span>
-
-                                            <span
-                                                style={{
-                                                    background: "#dcfce7",
-                                                    color: "#16a34a",
-                                                    padding: "5px 10px",
-                                                    borderRadius: "20px",
-                                                    fontSize: "12px",
-                                                    fontWeight: "500",
-                                                }}
-                                            >
-                                                ● Open Now
-                                            </span>
-                                        </div>
                                     </div>
                                 </div>
 
-                                {/* BUTTON */}
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        gap: "10px",
+                                        flexWrap: "wrap",
+                                        marginBottom: "15px",
+                                    }}
+                                >
+                                    <span
+                                        style={{
+                                            background: "#fde68a",
+                                            padding: "5px 10px",
+                                            borderRadius: "20px",
+                                            fontSize: "12px",
+                                        }}
+                                    >
+                                        Tickets Available
+                                    </span>
+
+                                    <span
+                                        style={{
+                                            background: "#dcfce7",
+                                            color: "#16a34a",
+                                            padding: "5px 10px",
+                                            borderRadius: "20px",
+                                            fontSize: "12px",
+                                            fontWeight: "500",
+                                        }}
+                                    >
+                                        ● Open Now
+                                    </span>
+                                </div>
+
                                 <button
                                     style={{
+                                        width: "100%",
                                         background: "#f97316",
                                         color: "#fff",
                                         border: "none",
-                                        padding: "10px 18px",
+                                        padding: "10px",
                                         borderRadius: "10px",
                                         cursor: "pointer",
                                         fontWeight: "600",
-                                        whiteSpace: "nowrap",
                                     }}
                                 >
                                     View Details
@@ -284,6 +270,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+
         </div>
     );
 };

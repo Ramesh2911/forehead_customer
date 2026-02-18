@@ -13,7 +13,13 @@ const MainLayout = () => {
     >
       <Header />
 
-      <main style={{ flex: 1, padding: "30px" }}>
+      <main
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <Outlet />
       </main>
 
