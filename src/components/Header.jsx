@@ -25,13 +25,13 @@ const Header = () => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   const isMobile = screenWidth < 768;
-  
+
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  
+
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -52,7 +52,7 @@ const Header = () => {
       );
     }
   }, []);
-  
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -103,7 +103,7 @@ const Header = () => {
             </span>
           )}
         </Link>
-      
+
         {!isMobile && (
           <div
             style={{
@@ -142,7 +142,7 @@ const Header = () => {
                 {location}
               </span>
             </div>
-           
+
             <div style={{ position: "relative", width: "40%", minWidth: "200px" }}>
               <FaSearch
                 style={{
@@ -170,7 +170,7 @@ const Header = () => {
             </div>
           </div>
         )}
-       
+
         <div
           style={{
             display: "flex",
@@ -180,7 +180,7 @@ const Header = () => {
           }}
         >
           <div style={{ position: "relative" }}>
-            <FaBell size={18} />
+            <FaBell size={25} />
             <span
               style={{
                 position: "absolute",
@@ -196,10 +196,10 @@ const Header = () => {
               3
             </span>
           </div>
-          
+
           <div ref={dropdownRef} style={{ position: "relative" }}>
             <FaUserCircle
-              size={22}
+              size={25}
               style={{ cursor: "pointer" }}
               onClick={() => setShowDropdown(!showDropdown)}
             />
@@ -221,11 +221,11 @@ const Header = () => {
               >
                 {[
                   { label: "Login", icon: <FaSignInAlt />, path: "/login" },
-                  { label: "Ticket", icon: <FaTicketAlt /> },
+                  { label: "Ticket", icon: <FaTicketAlt />, },
                   { label: "Result", icon: <FaChartBar /> },
                   { label: "Roles", icon: <FaUserShield /> },
                   { label: "Notice", icon: <FaBullhorn /> },
-                  { label: "Subscription", icon: <FaCreditCard /> },
+                  { label: "Subscription", icon: <FaCreditCard />, path: "/subcription" },
                   { label: "Logout", icon: <FaSignOutAlt />, danger: true },
                 ].map((item, index) => (
                   <div
@@ -261,7 +261,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-     
+
       {isMobile && (
         <div style={{ marginTop: "12px", width: "100%" }}>
           <div
@@ -287,7 +287,7 @@ const Header = () => {
               {location}
             </span>
           </div>
-          
+
           <div style={{ position: "relative", width: "100%" }}>
             <FaSearch
               style={{
