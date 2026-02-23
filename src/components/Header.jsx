@@ -220,12 +220,12 @@ const Header = () => {
                 }}
               >
                 {[
-                  { label: "Login", icon: <FaSignInAlt />, path: "/login" },
-                  { label: "Ticket", icon: <FaTicketAlt />, },
-                  { label: "Result", icon: <FaChartBar /> },
-                  { label: "Roles", icon: <FaUserShield /> },
-                  { label: "Notice", icon: <FaBullhorn /> },
-                  { label: "Subscription", icon: <FaCreditCard />, path: "/subcription" },
+                  { label: "Login", icon: <FaSignInAlt size={18} style={{ color: "#1e40af" }} />, path: "/login" },
+                  { label: "Ticket", icon: <FaTicketAlt size={18} style={{ color: "#1e40af" }} />, },
+                  { label: "Result", icon: <FaChartBar size={18} style={{ color: "#1e40af" }} /> },
+                  { label: "Roles", icon: <FaUserShield size={18} style={{ color: "#1e40af" }} /> },
+                  { label: "Notice", icon: <FaBullhorn size={18} style={{ color: "#1e40af" }} /> },
+                  { label: "Subscription", icon: <FaCreditCard size={18} style={{ color: "#1e40af" }} />, path: "/subcription" },
                   { label: "Logout", icon: <FaSignOutAlt />, danger: true },
                 ].map((item, index) => (
                   <div

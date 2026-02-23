@@ -1,11 +1,14 @@
 import { useState, useRef } from "react";
 import { toast } from "react-toastify";
 import indFlag from "../../assets/indFlag.jpg";
+import { Link } from "react-router-dom";
 
 const Login = () => {
+
   const [phone, setPhone] = useState("");
   const [step, setStep] = useState("phone");
   const [otp, setOtp] = useState(["", "", "", ""]);
+  const [agreed, setAgreed] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -26,6 +29,11 @@ const Login = () => {
   const handleSendOtp = () => {
     if (phone.length !== 10) {
       toast.error("Enter valid 10 digit mobile number");
+      return;
+    }
+
+    if (!agreed) {
+      toast.error("Please accept Terms & Conditions and Privacy Policy");
       return;
     }
     toast.success("OTP Sent Successfully");
@@ -111,7 +119,16 @@ const Login = () => {
           boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
         }}
       >
-        <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+        <h2
+          style={{
+            textAlign: "center",
+            marginBottom: "20px",
+            fontWeight: "700",
+            background: "linear-gradient(90deg, #1e40af, #dc2626)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
           {step === "phone"
             ? "Login"
             : step === "otp"
@@ -135,10 +152,34 @@ const Login = () => {
                 style={{ flex: 1, border: "none", padding: "10px", outline: "none" }}
               />
             </div>
-
+            <div style={{ marginTop: "12px", fontSize: "14px", color: "#374151" }}>
+              <label style={{ display: "flex", alignItems: "flex-start", gap: "8px", cursor: "pointer" }}>
+                <input
+                  type="checkbox"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                  style={{ marginTop: "4px" }}
+                />
+                <span>
+                  I agree to the{" "}
+                  <Link to="/terms" style={{ color: "#1e40af", fontWeight: 500 }}>
+                    Terms & Conditions
+                  </Link>{" "}
+                  and{" "}
+                  <Link to="/privacy" style={{ color: "#dc2626", fontWeight: 500 }}>
+                    Privacy Policy
+                  </Link>.
+                </span>
+              </label>
+            </div>
             <button
-              style={btnStyle("#2563eb")}
+              style={{
+                ...btnStyle("#2563eb"),
+                opacity: agreed ? 1 : 0.6,
+                cursor: agreed ? "pointer" : "not-allowed",
+              }}
               onClick={handleSendOtp}
+              disabled={!agreed}
             >
               Send OTP
             </button>

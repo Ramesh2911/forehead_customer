@@ -16,6 +16,12 @@ export const getAllSubcription = () => {
   return API.get(SUBCRIPTIONS.LIST);
 };
 
+export const getSubscriptionsDetails = (id) => {
+  return API.get(SUBCRIPTIONS.DETAILS, {
+    params: { id },
+  });
+};
+
 
 
 

@@ -73,7 +73,6 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Links */}
           <div
             style={{
               flex: isMobile ? "100%" : "0 0 30%",
@@ -83,34 +82,33 @@ const Footer = () => {
               fontSize: "14px",
             }}
           >
-            {[
-              "About",
-              "Subscription",
-              "Rules",
-              "Terms & Conditions",
-              "Privacy Policy",
-            ].map((item, index) => (
-              <Link
-                key={index}
-                to="/"
-                style={{
-                  color: "#d1d5db",
-                  textDecoration: "none",
-                  transition: "0.3s",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "#ffffff")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "#d1d5db")
-                }
-              >
-                {item}
-              </Link>
-            ))}
+            {
+              [
+                { name: "About", path: "/about" },
+                { name: "Subscription", path: "/subcription" },
+                { name: "Rules", path: "/rules" },
+                { name: "Terms & Conditions", path: "/terms" },
+                { name: "Privacy Policy", path: "/privacy" },
+              ].map((item, index) => (
+                <Link
+                  key={index}
+                  to={item.path}
+                  style={{
+                    color: "#d1d5db",
+                    textDecoration: "none",
+                    transition: "0.3s",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "#dc2626")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = "#d1d5db")
+                  }
+                >
+                  {item.name}
+                </Link>
+              ))}
           </div>
-
-          {/* Social Icons */}
           <div
             style={{
               flex: isMobile ? "100%" : "0 0 30%",
@@ -137,10 +135,10 @@ const Footer = () => {
                     transition: "0.3s",
                   }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.background = "#2563eb")
+                    (e.currentTarget.style.background = "#dc2626")
                   }
                   onMouseLeave={(e) =>
-                    (e.currentTarget.style.background = "#1e293b")
+                    (e.currentTarget.style.background = "#1e40af")
                   }
                 >
                   <Icon size={16} color="#fff" />
