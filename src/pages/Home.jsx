@@ -13,8 +13,11 @@ import {
 }
     from "react-icons/fa";
 import banner from "../assets/banner.jpeg"
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+
+    const navigate = useNavigate();
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -37,31 +40,32 @@ const Home = () => {
             >
                 {[
                     {
-                        icon: <FaStore size={28} />,
+                        icon: <FaStore size={50} />,
                         title: "Nearby Shops",
                         subtitle: "Find shops near you",
                         gradient: "linear-gradient(135deg, #93c5fd, #60a5fa)",
                     },
                     {
-                        icon: <FaTicketAlt size={28} />,
+                        icon: <FaTicketAlt size={50} />,
                         title: "Lottery Tickets",
                         subtitle: "Buy tickets easily",
+                        path: "/ticket",
                         gradient: "linear-gradient(135deg, #86efac, #4ade80)",
                     },
                     {
-                        icon: <FaClipboardList size={28} />,
+                        icon: <FaClipboardList size={50} />,
                         title: "Results",
                         subtitle: "Check latest results",
                         gradient: "linear-gradient(135deg, #fde68a, #fbbf24)",
                     },
                     {
-                        icon: <FaDice size={28} />,
+                        icon: <FaDice size={50} />,
                         title: "Draws",
                         subtitle: "Start new draw",
                         gradient: "linear-gradient(135deg, #fca5a5, #f87171)",
                     },
                     {
-                        icon: <FaHeadset size={28} />,
+                        icon: <FaHeadset size={50} />,
                         title: "Support",
                         subtitle: "24/7 customer help",
                         gradient: "linear-gradient(135deg, #bfdbfe, #93c5fd)",
@@ -79,6 +83,11 @@ const Home = () => {
                             transition: "all 0.3s ease",
                             position: "relative",
                             overflow: "hidden",
+                        }}
+                        onClick={() => {
+                            if (item.path) {
+                                navigate(item.path);
+                            }
                         }}
                         onMouseEnter={(e) =>
                             (e.currentTarget.style.transform = "translateY(-6px)")
@@ -177,7 +186,7 @@ const Home = () => {
                         gap: "20px",
                     }}
                 >
-                    {["Dear Lottery", "Bangasree Lottery", "Lagna Lakshmi"].map(
+                    {["Dear Lottery", "Bangasree Lottery", "Lagna Lakshmi",].map(
                         (item, index) => (
                             <div
                                 key={index}
@@ -209,18 +218,40 @@ const Home = () => {
                 }}
             >
                 <div>
-                    <h4
+                    <div
                         style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
                             marginBottom: "20px",
-                            fontWeight: "700",
-                            background: "linear-gradient(90deg, #1e40af, #dc2626)",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
                         }}
                     >
-                        Featured Shops Near You
-                    </h4>
-
+                        <h4
+                            style={{
+                                margin: 0,
+                                fontWeight: "700",
+                                fontSize: "18px",
+                                background: "linear-gradient(90deg, #1e40af, #dc2626)",
+                                WebkitBackgroundClip: "text",
+                                WebkitTextFillColor: "transparent",
+                            }}
+                        >
+                            Featured Shops Near You
+                        </h4>
+                        <button
+                            style={{
+                                background: "linear-gradient(90deg, #1e40af, #dc2626)",
+                                color: "#fff",
+                                border: "none",
+                                padding: "8px 14px",
+                                borderRadius: "8px",
+                                cursor: "pointer",
+                                fontSize: "14px",
+                            }}
+                        >
+                            View All
+                        </button>
+                    </div>
                     <div
                         style={{
                             display: "grid",

@@ -1,150 +1,209 @@
 import { useState } from "react";
 import {
-    FaSearch,
-    FaStore,
+    FaBookmark,
     FaHistory,
     FaListAlt,
     FaTags,
+    FaSyncAlt,
+    FaArrowRight,
+    FaEquals,
+    FaHashtag,
+    FaTrophy,
 } from "react-icons/fa";
 
 const Ticket = () => {
 
-    const [searchValue, setSearchValue] = useState("");
+    const cardStyle = {
+        background: "#f3f4f6",
+        borderRadius: "18px",
+        boxShadow: "0 15px 35px rgba(0,0,0,0.08)",
+        padding: "25px",
+        margin: "30px auto",
+        width: "95%",
+        maxWidth: "1200px",
+    };
 
-    const detailsItems = [
-        {
-            title: "My Follow Retailers",
-            icon: <FaStore size={20} />,
-        },
-        {
-            title: "My Ticket History",
-            icon: <FaHistory size={20} />,
-        },
-        {
-            title: "My Put Result List",
-            icon: <FaListAlt size={20} />,
-        },
-        {
-            title: "Ticket Type Retailers",
-            icon: <FaTags size={20} />,
-        },
-    ];
-
-    return (
-        <div style={{ padding: "30px 15px", background: "#f8fafc" }}>
-            <h3
-                style={{
-                    marginBottom: "25px",
-                    fontWeight: "700",
-                    background: "linear-gradient(90deg, #1e40af, #dc2626)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    display: "inline-block",
-                }}
-            >
-                Ticket Details
-            </h3>
-
+    const DashboardCard = ({ title, subtitle, gradient, Icon, onClick }) => {
+        return (
             <div
+                onClick={onClick}
                 style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))",
-                    gap: "20px",
-                    marginBottom: "50px",
+                    borderRadius: "18px",
+                    padding: "16px 18px",
+                    background: gradient,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    color: "#fff",
+                    cursor: "pointer",
+                    boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+                    transition: "0.3s"
                 }}
+                onMouseEnter={(e) =>
+                    (e.currentTarget.style.transform = "scale(1.03)")
+                }
+                onMouseLeave={(e) =>
+                    (e.currentTarget.style.transform = "scale(1)")
+                }
             >
-                {detailsItems.map((item, index) => (
+                <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+
                     <div
-                        key={index}
                         style={{
-                            border: "1px solid #e5e7eb",
-                            borderRadius: "18px",
-                            padding: "20px",
+                            width: "45px",
+                            height: "45px",
+                            borderRadius: "50%",
+                            background: "rgba(255,255,255,0.9)",
                             display: "flex",
                             alignItems: "center",
-                            gap: "15px",
-                            background: "linear-gradient(135deg, #1e40af, #dc2626)",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease",
-                            boxShadow: "0 4px 10px rgba(0,0,0,0.04)",
-                            color: "#fff", 
+                            justifyContent: "center",
+                            color: "#111827"
                         }}
-                        onMouseEnter={(e) =>
-                            (e.currentTarget.style.transform = "translateY(-4px)")
-                        }
-                        onMouseLeave={(e) =>
-                            (e.currentTarget.style.transform = "translateY(0)")
-                        }
                     >
-                        <div
-                            style={{
-                                width: "45px",
-                                height: "45px",
-                                borderRadius: "12px",
-                                background: "#1e40af",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                color: "#fff",
-                            }}
-                        >
-                            {item.icon}
-                        </div>
-
-                        <span
-                            style={{
-                                fontWeight: "600",
-                                fontSize: "15px",
-                                color: "#111827",
-                            }}
-                        >
-                            {item.title}
-                        </span>
+                        <Icon size={20} />
                     </div>
-                ))}
-            </div>
 
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                }}
-            >
+                    <div>
+                        <div style={{ fontWeight: "600", fontSize: "15px" }}>
+                            {title}
+                        </div>
+                        <div style={{ fontSize: "12px", opacity: 0.9 }}>
+                            {subtitle}
+                        </div>
+                    </div>
+                </div>
                 <div
                     style={{
-                        position: "relative",
-                        width: "100%",
-                        maxWidth: "500px",
+                        width: "28px",
+                        height: "28px",
+                        borderRadius: "50%",
+                        background: "rgba(255,255,255,0.3)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center"
                     }}
                 >
-                    <FaSearch
-                        style={{
-                            position: "absolute",
-                            top: "50%",
-                            left: "15px",
-                            transform: "translateY(-50%)",
-                            color: "#6b7280",
-                        }}
+                    ➜
+                </div>
+            </div>
+        );
+    };
+
+    return (
+        <>
+            <div style={cardStyle}>
+                <div
+                    style={{
+                        fontWeight: "700",
+                        fontSize: "18px",
+                        marginBottom: "14px",
+                        background: "linear-gradient(90deg, #1e40af, #dc2626)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        display: "inline-block",
+                    }}
+                >
+                    Ticket Details
+                </div>
+
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                        gap: "14px"
+                    }}
+                >
+
+                    <DashboardCard
+                        title="My Follow Retailers"
+                        subtitle="View Followed Shops"
+                        gradient="linear-gradient(135deg, #3b82f6, #1e40af)"
+                        Icon={FaBookmark}
                     />
 
-                    <input
-                        type="text"
-                        placeholder="Enter Ticket Number..."
-                        value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
-                        style={{
-                            width: "100%",
-                            padding: "14px 15px 14px 40px",
-                            borderRadius: "30px",
-                            border: "1px solid #e5e7eb",
-                            outline: "none",
-                            fontSize: "15px",
-                            boxShadow: "0 3px 8px rgba(0,0,0,0.04)",
-                        }}
+                    <DashboardCard
+                        title="My Ticket History"
+                        subtitle="View Past Tickets"
+                        gradient="linear-gradient(135deg, #ef4444, #dc2626)"
+                        Icon={FaHistory}
+                    />
+
+                    <DashboardCard
+                        title="My Put Result List"
+                        subtitle="Check Uploaded Results"
+                        gradient="linear-gradient(135deg, #22c55e, #16a34a)"
+                        Icon={FaListAlt}
+                    />
+
+                    <DashboardCard
+                        title="Ticket Type Retailers"
+                        subtitle="Browse By Ticket Type"
+                        gradient="linear-gradient(135deg, #fbbf24, #f59e0b)"
+                        Icon={FaTags}
                     />
                 </div>
             </div>
-        </div>
+
+            <div style={cardStyle}>
+                <div
+                    style={{
+                        fontWeight: "700",
+                        fontSize: "18px",
+                        marginBottom: "14px",
+                        background: "linear-gradient(90deg, #1e40af, #dc2626)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        display: "inline-block",
+                    }}
+                >
+                    Ticket Search
+                </div>
+
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                        gap: "14px"
+                    }}
+                >
+
+                    <DashboardCard
+                        title="1st Prize Ticket No."
+                        subtitle="Top Winning Number"
+                        gradient="linear-gradient(135deg, #fde047, #facc15)"
+                        Icon={FaTrophy}
+                    />
+
+                    <DashboardCard
+                        title="4 Digit Ticket No."
+                        subtitle="Exact 4 Digit Match"
+                        gradient="linear-gradient(135deg, #d1d5db, #9ca3af)"
+                        Icon={FaHashtag}
+                    />
+
+                    <DashboardCard
+                        title="Middle 2 Digit Ticket No."
+                        subtitle="Middle Number Match"
+                        gradient="linear-gradient(135deg, #d97706, #b45309)"
+                        Icon={FaEquals}
+                    />
+
+                    <DashboardCard
+                        title="Last 2 Digit Ticket No."
+                        subtitle="Ending Number Match"
+                        gradient="linear-gradient(135deg, #a855f7, #7c3aed)"
+                        Icon={FaArrowRight}
+                    />
+
+                    <DashboardCard
+                        title="Most Repeat Ticket No."
+                        subtitle="Most Frequently Drawn"
+                        gradient="linear-gradient(135deg, #4ade80, #22c55e)"
+                        Icon={FaSyncAlt}
+                    />
+                </div>
+            </div>
+        </>
     );
 };
 

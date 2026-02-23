@@ -67,7 +67,7 @@ const Header = () => {
   return (
     <header
       style={{
-        backgroundColor: "#4b1b2454",
+        backgroundColor: "#d1fae5",
         padding: "12px 15px",
         color: "#fff",
         position: "sticky",
@@ -94,9 +94,9 @@ const Header = () => {
             flexShrink: 0,
           }}
         >
-          <img src={logo} alt="Logo" style={{ height: "40px" }} />
+          <img src={logo} alt="Logo" style={{ height: "50px" }} />
 
-          <span style={{ fontSize: "18px", fontWeight: "700" }}>
+          <span style={{ fontSize: "20px", fontWeight: "700" }}>
             <span style={{ color: "#1e40af" }}>Ticket</span>
             <span style={{ color: "#dc2626" }}>map</span>
           </span>
@@ -178,7 +178,7 @@ const Header = () => {
           }}
         >
           <div style={{ position: "relative" }}>
-            <FaBell size={25} />
+            <FaBell size={30} color="#1e40af" />
             <span
               style={{
                 position: "absolute",
@@ -197,7 +197,8 @@ const Header = () => {
 
           <div ref={dropdownRef} style={{ position: "relative" }}>
             <FaUserCircle
-              size={25}
+              size={30}
+              color="#1e40af"
               style={{ cursor: "pointer" }}
               onClick={() => setShowDropdown(!showDropdown)}
             />
@@ -221,7 +222,7 @@ const Header = () => {
                   { label: "Login", icon: <FaSignInAlt size={18} style={{ color: "#1e40af" }} />, path: "/login" },
                   { label: "Ticket", icon: <FaTicketAlt size={18} style={{ color: "#1e40af" }} />, path: "/ticket" },
                   { label: "Result", icon: <FaChartBar size={18} style={{ color: "#1e40af" }} /> },
-                  { label: "Roles", icon: <FaUserShield size={18} style={{ color: "#1e40af" }} /> },
+                  { label: "Rules", icon: <FaUserShield size={18} style={{ color: "#1e40af" }} /> },
                   { label: "Notice", icon: <FaBullhorn size={18} style={{ color: "#1e40af" }} /> },
                   { label: "Subscription", icon: <FaCreditCard size={18} style={{ color: "#1e40af" }} />, path: "/subcription" },
                   { label: "Logout", icon: <FaSignOutAlt />, danger: true },
