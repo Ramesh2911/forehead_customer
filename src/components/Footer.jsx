@@ -148,7 +148,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Section */}
         <div
           style={{
             borderTop: "1px solid #1f2937",
@@ -157,9 +156,17 @@ const Footer = () => {
             textAlign: "center",
             fontSize: "13px",
             color: "#9ca3af",
+            lineHeight: "1.6",
           }}
         >
-          © {new Date().getFullYear()} Ticketmap. All Rights Reserved.
+          <span style={{ color: "#1e40af", fontWeight: "500" }}>
+            Ticketmap™
+          </span>{" "}
+          is a brand of{" "}
+          <span style={{ color: "#dc2626", fontWeight: "500" }}>
+            Cotech & Intelligence
+          </span>{" "}
+          (Proprietorship) © {new Date().getFullYear()} Cotech & Intelligence. All rights reserved.
         </div>
       </div>
     </footer>
