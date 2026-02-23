@@ -9,6 +9,8 @@ import {
     FaEquals,
     FaHashtag,
     FaTrophy,
+    FaCalendarAlt,
+    FaSearch
 } from "react-icons/fa";
 
 const Ticket = () => {
@@ -177,7 +179,7 @@ const Ticket = () => {
                     <DashboardCard
                         title="4 Digit Ticket No."
                         subtitle="Exact 4 Digit Match"
-                        gradient="linear-gradient(135deg, #d1d5db, #9ca3af)"
+                        gradient="linear-gradient(135deg, #7d6891, #d614d6)"
                         Icon={FaHashtag}
                     />
 
@@ -200,6 +202,59 @@ const Ticket = () => {
                         subtitle="Most Frequently Drawn"
                         gradient="linear-gradient(135deg, #4ade80, #22c55e)"
                         Icon={FaSyncAlt}
+                    />
+                </div>
+            </div>
+
+            <div style={cardStyle}>
+                <div
+                    style={{
+                        fontWeight: "700",
+                        fontSize: "18px",
+                        marginBottom: "14px",
+                        background: "linear-gradient(90deg, #1e40af, #dc2626)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        display: "inline-block",
+                    }}
+                >
+                    Bumper
+                </div>
+
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                        gap: "14px"
+                    }}
+                >
+
+                    <DashboardCard
+                        title="Bumper Draw"
+                        subtitle="View Upcoming Bumper Draw"
+                        gradient="linear-gradient(135deg, #2563eb, #1e3a8a)"
+                        Icon={FaCalendarAlt}
+                    />
+
+                    <DashboardCard
+                        title="Bumper Result"
+                        subtitle="Check Bumper Draw Results"
+                        gradient="linear-gradient(135deg, #facc15, #f59e0b)"
+                        Icon={FaTrophy}
+                    />
+
+                    <DashboardCard
+                        title="Bumper Ticket No Check"
+                        subtitle="Verify Your Ticket Number"
+                        gradient="linear-gradient(135deg, #10b981, #047857)"
+                        Icon={FaSearch}
+                    />
+
+                    <DashboardCard
+                        title="Bumper Winning Record"
+                        subtitle="View Past Winning Records"
+                        gradient="linear-gradient(135deg, #7c3aed, #4c1d95)"
+                        Icon={FaHistory}
                     />
                 </div>
             </div>
