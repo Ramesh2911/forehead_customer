@@ -67,7 +67,7 @@ const Header = () => {
   return (
     <header
       style={{
-        backgroundColor: "#1b2036",
+        backgroundColor: "#4b1b2454",
         padding: "12px 15px",
         color: "#fff",
         position: "sticky",
@@ -94,14 +94,12 @@ const Header = () => {
             flexShrink: 0,
           }}
         >
-          <img src={logo} alt="Logo" style={{ height: "35px" }} />
+          <img src={logo} alt="Logo" style={{ height: "40px" }} />
 
-          {!isMobile && (
-            <span style={{ fontSize: "18px", fontWeight: "700" }}>
-              <span style={{ color: "#1e40af" }}>Ticket</span>
-              <span style={{ color: "#dc2626" }}>map</span>
-            </span>
-          )}
+          <span style={{ fontSize: "18px", fontWeight: "700" }}>
+            <span style={{ color: "#1e40af" }}>Ticket</span>
+            <span style={{ color: "#dc2626" }}>map</span>
+          </span>
         </Link>
 
         {!isMobile && (
@@ -221,7 +219,7 @@ const Header = () => {
               >
                 {[
                   { label: "Login", icon: <FaSignInAlt size={18} style={{ color: "#1e40af" }} />, path: "/login" },
-                  { label: "Ticket", icon: <FaTicketAlt size={18} style={{ color: "#1e40af" }} />, },
+                  { label: "Ticket", icon: <FaTicketAlt size={18} style={{ color: "#1e40af" }} />, path: "/ticket" },
                   { label: "Result", icon: <FaChartBar size={18} style={{ color: "#1e40af" }} /> },
                   { label: "Roles", icon: <FaUserShield size={18} style={{ color: "#1e40af" }} /> },
                   { label: "Notice", icon: <FaBullhorn size={18} style={{ color: "#1e40af" }} /> },

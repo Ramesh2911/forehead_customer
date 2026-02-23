@@ -30,7 +30,7 @@ const Home = () => {
             <div
                 style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(3, 1fr)",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
                     gap: "15px",
                     marginBottom: "20px",
                 }}
@@ -40,85 +40,89 @@ const Home = () => {
                         icon: <FaStore size={28} />,
                         title: "Nearby Shops",
                         subtitle: "Find shops near you",
-                        gradient: "linear-gradient(135deg, #4ade80, #16a34a)",
+                        gradient: "linear-gradient(135deg, #93c5fd, #60a5fa)",
                     },
                     {
                         icon: <FaTicketAlt size={28} />,
                         title: "Lottery Tickets",
                         subtitle: "Buy tickets easily",
-                        gradient: "linear-gradient(135deg, #facc15, #f97316)",
+                        gradient: "linear-gradient(135deg, #86efac, #4ade80)",
                     },
                     {
                         icon: <FaClipboardList size={28} />,
                         title: "Results",
                         subtitle: "Check latest results",
-                        gradient: "linear-gradient(135deg, #60a5fa, #2563eb)",
+                        gradient: "linear-gradient(135deg, #fde68a, #fbbf24)",
                     },
                     {
                         icon: <FaDice size={28} />,
                         title: "Draws",
                         subtitle: "Start new draw",
-                        gradient: "linear-gradient(135deg, #a78bfa, #7c3aed)",
+                        gradient: "linear-gradient(135deg, #fca5a5, #f87171)",
                     },
                     {
                         icon: <FaHeadset size={28} />,
                         title: "Support",
                         subtitle: "24/7 customer help",
-                        gradient: "linear-gradient(135deg, #fb7185, #e11d48)",
+                        gradient: "linear-gradient(135deg, #bfdbfe, #93c5fd)",
                     },
                 ].map((item, index) => (
                     <div
                         key={index}
                         style={{
                             background: item.gradient,
-                            borderRadius: "16px",
-                            padding: "16px",
-                            boxShadow: "0 6px 15px rgba(0,0,0,0.08)",
-                            color: "#fff",
+                            borderRadius: "22px",
+                            padding: "25px 15px",
+                            boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
+                            textAlign: "center",
                             cursor: "pointer",
-                            transition: "0.3s",
+                            transition: "all 0.3s ease",
+                            position: "relative",
+                            overflow: "hidden",
                         }}
                         onMouseEnter={(e) =>
-                            (e.currentTarget.style.transform = "translateY(-5px)")
+                            (e.currentTarget.style.transform = "translateY(-6px)")
                         }
                         onMouseLeave={(e) =>
                             (e.currentTarget.style.transform = "translateY(0)")
                         }
                     >
+                        {/* Soft white overlay for screenshot feel */}
                         <div
                             style={{
-                                background: "rgba(255,255,255,0.2)",
-                                width: "45px",
-                                height: "45px",
-                                borderRadius: "12px",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                marginBottom: "10px",
+                                position: "absolute",
+                                bottom: "-30px",
+                                left: 0,
+                                right: 0,
+                                height: "80px",
+                                background: "rgba(255,255,255,0.35)",
+                                borderTopLeftRadius: "50%",
+                                borderTopRightRadius: "50%",
+                            }}
+                        />
+
+                        {/* Large Icon */}
+                        <div
+                            style={{
+                                fontSize: "60px",
+                                color: "#ffffff",
+                                marginBottom: "15px",
                             }}
                         >
                             {item.icon}
                         </div>
 
+                        {/* Title Only */}
                         <h4
                             style={{
                                 margin: 0,
                                 fontSize: "16px",
-                                fontWeight: 600,
+                                fontWeight: "600",
+                                color: "#1f2937",
                             }}
                         >
                             {item.title}
                         </h4>
-
-                        <p
-                            style={{
-                                margin: 0,
-                                fontSize: "12px",
-                                opacity: 0.9,
-                            }}
-                        >
-                            {item.subtitle}
-                        </p>
                     </div>
                 ))}
             </div>
@@ -153,7 +157,7 @@ const Home = () => {
                     </h4>
                     <button
                         style={{
-                            background: "#2563eb",
+                            background: "linear-gradient(90deg, #1e40af, #dc2626)",
                             color: "#fff",
                             border: "none",
                             padding: "8px 14px",
@@ -166,7 +170,6 @@ const Home = () => {
                     </button>
                 </div>
 
-                {/* Responsive Grid */}
                 <div
                     style={{
                         display: "grid",
@@ -320,7 +323,7 @@ const Home = () => {
                                 <button
                                     style={{
                                         width: "100%",
-                                        background: "#f97316",
+                                        background: "linear-gradient(90deg, #1e40af, #dc2626)",
                                         color: "#fff",
                                         border: "none",
                                         padding: "10px",
