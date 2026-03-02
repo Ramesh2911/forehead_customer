@@ -9,4 +9,12 @@ export const SUBCRIPTIONS = {
   DETAILS: "/subcription-details",
 };
 
+export const COMPANIES = {
+  LIST: "/all-companies",
+};
+
+export const TICKETS = {
+  FIRSTPRIZELIST: "/first-prize",
+};
+
 

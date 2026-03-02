@@ -1,7 +1,9 @@
 import API from "./api";
 import {
   AUTH,
+  COMPANIES,
   SUBCRIPTIONS,
+  TICKETS,
 } from "./endpoints";
 
 export const loginApi = (payload) => {
@@ -22,6 +24,15 @@ export const getSubscriptionsDetails = (id) => {
   });
 };
 
+export const getAllCompanies = () => {
+  return API.get(COMPANIES.LIST);
+};
+
+export const getFirstPrizeListByCompany = (id) => {
+  return API.get(TICKETS.FIRSTPRIZELIST, {
+    params: { company_id: id },
+  });
+};
 
 
 

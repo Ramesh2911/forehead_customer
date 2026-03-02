@@ -1,4 +1,11 @@
-import { useState } from "react";
+import {
+    Modal,
+    Button,
+    Form,
+    Row,
+    Col
+}
+    from "react-bootstrap";
 import {
     FaBookmark,
     FaHistory,
@@ -10,10 +17,37 @@ import {
     FaHashtag,
     FaTrophy,
     FaCalendarAlt,
-    FaSearch
+    FaSearch,
+    FaInfoCircle
 } from "react-icons/fa";
+import {
+    getAllCompanies,
+    getFirstPrizeListByCompany
+}
+    from "../../services/auth.api";
+import { useState } from "react";
+import DataTable from "react-data-table-component";
 
 const Ticket = () => {
+
+    const [showSearchModal, setShowSearchModal] = useState(false);
+    const [companies, setCompanies] = useState([]);
+    const [selectedCompany, setSelectedCompany] = useState("");
+    const [searchType, setSearchType] = useState("");
+    const [firstPrizeData, setFirstPrizeData] = useState([]);
+    const [firstPrizeLoading, setFirstPrizeLoading] = useState(false);
+    const [showTableModal, setShowTableModal] = useState(false);
+
+    const fetchCompanies = async () => {
+        try {
+            const res = await getAllCompanies();
+            if (res.data.success) {
+                setCompanies(res.data.data);
+            }
+        } catch (error) {
+            console.error("Company fetch error", error);
+        }
+    };
 
     const cardStyle = {
         background: "#f3f4f6",
@@ -90,6 +124,116 @@ const Ticket = () => {
             </div>
         );
     };
+
+    const handleSearchCardClick = (type) => {
+        setSearchType(type);
+        fetchCompanies();
+        setShowSearchModal(true);
+    };
+
+    const handleCompanyChange = async (companyId) => {
+        setSelectedCompany(companyId);
+        setFirstPrizeLoading(true);
+
+        try {
+            const res = await getFirstPrizeListByCompany(companyId);
+
+            if (res.data.success) {
+                setFirstPrizeData(res.data.data || []);
+            } else {
+                setFirstPrizeData([]);
+            }
+
+            // Close small modal
+            setShowSearchModal(false);
+
+            // Open table modal
+            setShowTableModal(true);
+
+        } catch (error) {
+            console.error("Fetch first prize error:", error);
+            setFirstPrizeData([]);
+            setShowSearchModal(false);
+            setShowTableModal(true);
+        } finally {
+            setFirstPrizeLoading(false);
+        }
+    };
+
+    const firstPrizeColumns = [
+        {
+            name: "Date",
+            selector: row => new Date(row.ticket_date).toLocaleDateString("en-GB"),
+            sortable: true
+        },
+        {
+            name: "Ticket No",
+            selector: row => row.ticket_no,
+            sortable: true
+        },
+        {
+            name: "Time",
+            cell: row => {
+                const hour = parseInt(row.ticket_time?.split(":")[0]);
+
+                let label = "-";
+                let color = "#6b7280";
+
+                if (hour >= 5 && hour < 12) {
+                    label = "Mrng";
+                    color = "#3b82f6";
+                }
+                else if (hour >= 12 && hour < 17) {
+                    label = "Day";
+                    color = "#f59e0b";
+                }
+                else if (hour >= 17 && hour <= 23) {
+                    label = "Eve";
+                    color = "#8b5cf6";
+                }
+
+                const tooltipText = `
+Ticket No: ${row.ticket_no}
+Prize Type: ${row.prize_type}
+Amount: ₹ ${Number(row.amount).toLocaleString()}
+Date: ${new Date(row.ticket_date).toLocaleDateString("en-GB")}
+Time: ${row.ticket_time}
+Status: ${row.is_sold === 1 ? "Sold" : "Unsold"}
+        `;
+
+                return (
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                        <span style={{
+                            fontSize: "13px",
+                            fontWeight: 600,
+                            color: color
+                        }}>
+                            {label}
+                        </span>
+                        <span
+                            title={tooltipText}
+                            style={{
+                                width: "18px",
+                                height: "18px",
+                                borderRadius: "50%",
+                                backgroundColor: color,
+                                color: "#fff",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontSize: "12px",
+                                fontWeight: 700,
+                                cursor: "pointer"
+                            }}
+                        >
+                            i
+                        </span>
+                    </div>
+                );
+            },
+            sortable: true
+        }
+    ];
 
     return (
         <>
@@ -174,6 +318,7 @@ const Ticket = () => {
                         subtitle="Top Winning Number"
                         gradient="linear-gradient(135deg, #fde047, #facc15)"
                         Icon={FaTrophy}
+                        onClick={() => handleSearchCardClick("1st")}
                     />
 
                     <DashboardCard
@@ -181,6 +326,7 @@ const Ticket = () => {
                         subtitle="Exact 4 Digit Match"
                         gradient="linear-gradient(135deg, #7d6891, #d614d6)"
                         Icon={FaHashtag}
+                        onClick={() => handleSearchCardClick("4digit")}
                     />
 
                     <DashboardCard
@@ -188,6 +334,7 @@ const Ticket = () => {
                         subtitle="Middle Number Match"
                         gradient="linear-gradient(135deg, #d97706, #b45309)"
                         Icon={FaEquals}
+                        onClick={() => handleSearchCardClick("middle2")}
                     />
 
                     <DashboardCard
@@ -195,6 +342,7 @@ const Ticket = () => {
                         subtitle="Ending Number Match"
                         gradient="linear-gradient(135deg, #a855f7, #7c3aed)"
                         Icon={FaArrowRight}
+                        onClick={() => handleSearchCardClick("last2")}
                     />
 
                     <DashboardCard
@@ -258,6 +406,90 @@ const Ticket = () => {
                     />
                 </div>
             </div>
+
+            <Modal
+                show={showSearchModal}
+                onHide={() => setShowSearchModal(false)}
+                centered
+                size="sm"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title style={{ fontWeight: 600 }}>
+                        <span style={{ color: "#2563eb" }}>
+                            {searchType}
+                        </span>{" "}
+                        <span style={{ color: "#ef4444" }}>
+                            Ticket Search
+                        </span>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="px-4 py-3">
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Label style={{ fontWeight: 500 }}>
+                                Select Company
+                            </Form.Label>
+
+                            <Form.Select
+                                value={selectedCompany}
+                                onChange={(e) => handleCompanyChange(e.target.value)}
+                                style={{
+                                    height: "45px",
+                                    borderRadius: "10px",
+                                    border: "1px solid #d1d5db"
+                                }}
+                            >
+                                <option value="">-- Select Company --</option>
+                                {companies.map((company) => (
+                                    <option key={company.id} value={company.id}>
+                                        {company.name}
+                                    </option>
+                                ))}
+                            </Form.Select>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+
+
+            <Modal
+                show={showTableModal}
+                onHide={() => setShowTableModal(false)}
+                centered
+                size="md"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        <span style={{ color: "#2563eb" }}>
+                            {searchType}
+                        </span>{" "}
+                        <span style={{ color: "#ef4444" }}>
+                            Prize Ticket List
+                        </span>
+                    </Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+
+                    <DataTable
+                        columns={firstPrizeColumns}
+                        data={firstPrizeData}
+                        progressPending={firstPrizeLoading}
+                        pagination
+                        paginationPerPage={5}
+                        paginationRowsPerPageOptions={[5, 25, 50, 100]}
+                        highlightOnHover
+                        striped
+                        responsive
+                        noDataComponent={
+                            <div style={{ padding: 20, color: "red", fontWeight: 600 }}>
+                                No data found!
+                            </div>
+                        }
+                    />
+
+                </Modal.Body>
+            </Modal>
         </>
     );
 };
