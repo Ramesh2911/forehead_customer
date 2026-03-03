@@ -118,7 +118,7 @@ const Header = () => {
                 display: "flex",
                 alignItems: "center",
                 gap: "6px",
-                background: "#2a2f4a",
+                //background: "#2a2f4a",
                 padding: "6px 12px",
                 borderRadius: "20px",
                 fontSize: "14px",
@@ -135,7 +135,7 @@ const Header = () => {
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
-                  background: "linear-gradient(90deg, #2a2f4a, #1e40af)",
+                  color: "blue",
                 }}
               >
                 {location}
@@ -282,7 +282,7 @@ const Header = () => {
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
-                background: "linear-gradient(90deg, #2a2f4a, #1e40af)",
+                color: "blue",
               }}
             >
               {location}

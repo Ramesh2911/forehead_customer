@@ -34,6 +34,18 @@ export const getFirstPrizeListByCompany = (id) => {
   });
 };
 
+export const getTicketListByWeek = (id, week, ticketNo) => {
+  return API.get(TICKETS.TICKETSEARCHBYWEEK, {
+    params: {
+      company_id: id,
+      week: week,
+      ticket_no: ticketNo,
+    },
+  });
+};
+
+
+
 
 
 

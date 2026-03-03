@@ -15,6 +15,7 @@ export const COMPANIES = {
 
 export const TICKETS = {
   FIRSTPRIZELIST: "/first-prize",
+  TICKETSEARCHBYWEEK: "/ticket-search-week",
 };
 
 

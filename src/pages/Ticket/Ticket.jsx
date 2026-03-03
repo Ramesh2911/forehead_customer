@@ -22,13 +22,22 @@ import {
 } from "react-icons/fa";
 import {
     getAllCompanies,
-    getFirstPrizeListByCompany
+    getFirstPrizeListByCompany,
+    getTicketListByWeek
 }
     from "../../services/auth.api";
 import { useState } from "react";
 import DataTable from "react-data-table-component";
+import { toast } from "react-toastify";
 
 const Ticket = () => {
+
+    const weekOptions = [
+        { value: "1", label: "1 Week" },
+        { value: "2", label: "2 Week" },
+        { value: "3", label: "3 Week" },
+        { value: "4", label: "4 Week" }
+    ];
 
     const [showSearchModal, setShowSearchModal] = useState(false);
     const [companies, setCompanies] = useState([]);
@@ -37,7 +46,13 @@ const Ticket = () => {
     const [firstPrizeData, setFirstPrizeData] = useState([]);
     const [firstPrizeLoading, setFirstPrizeLoading] = useState(false);
     const [showTableModal, setShowTableModal] = useState(false);
-    
+    const [showNumberModal, setShowNumberModal] = useState(false);
+    const [ticketInput, setTicketInput] = useState("");
+    const [selectedWeek, setSelectedWeek] = useState("");
+    const [searchData, setSearchData] = useState([]);
+    const [searchLoading, setSearchLoading] = useState(false);
+    const [hasSearched, setHasSearched] = useState(false);
+
 
     const fetchCompanies = async () => {
         try {
@@ -134,31 +149,47 @@ const Ticket = () => {
 
     const handleCompanyChange = async (companyId) => {
         setSelectedCompany(companyId);
-        setFirstPrizeLoading(true);
 
-        try {
-            const res = await getFirstPrizeListByCompany(companyId);
+        setShowSearchModal(false);
 
-            if (res.data.success) {
-                setFirstPrizeData(res.data.data || []);
-            } else {
+        if (searchType === "1st") {
+
+            setFirstPrizeLoading(true);
+
+            try {
+                const res = await getFirstPrizeListByCompany(companyId);
+
+                if (res.data.success) {
+                    setFirstPrizeData(res.data.data || []);
+                } else {
+                    setFirstPrizeData([]);
+                }
+
+                setShowTableModal(true);
+
+            } catch (error) {
+                console.error(error);
                 setFirstPrizeData([]);
+                setShowTableModal(true);
+            } finally {
+                setFirstPrizeLoading(false);
             }
 
-            // Close small modal
-            setShowSearchModal(false);
-
-            // Open table modal
-            setShowTableModal(true);
-
-        } catch (error) {
-            console.error("Fetch first prize error:", error);
-            setFirstPrizeData([]);
-            setShowSearchModal(false);
-            setShowTableModal(true);
-        } finally {
-            setFirstPrizeLoading(false);
+        } else {
+            setShowNumberModal(true);
         }
+    };
+
+    const handleCloseNumberModal = () => {
+        setShowNumberModal(false);
+        setSelectedCompany("");
+        setSelectedWeek("");
+        setTicketInput("");
+    };
+
+    const handleCloseTableModal = () => {
+        setShowTableModal(false);
+        setSelectedCompany("");
     };
 
     const firstPrizeColumns = [
@@ -235,6 +266,56 @@ Status: ${row.is_sold === 1 ? "Sold" : "Unsold"}
             sortable: true
         }
     ];
+
+    const handleSearch = async () => {
+
+        if (!selectedWeek) {
+            toast.error("Please select week.");
+            return;
+        }
+
+        if (!ticketInput) {
+            toast.error("Please enter ticket number.");
+            return;
+        }
+
+        if (searchType === "4digit" && ticketInput.length !== 4) {
+            toast.error("Please enter exactly 4 digits.");
+            return;
+        }
+
+        if (
+            (searchType === "middle2" || searchType === "last2") &&
+            ticketInput.length !== 2
+        ) {
+            toast.error("Please enter exactly 2 digits.");
+            return;
+        }
+
+        try {
+            setSearchLoading(true);
+            setHasSearched(true);
+
+            const res = await getTicketListByWeek(
+                selectedCompany,
+                selectedWeek,
+                ticketInput
+            );
+
+            if (res.data.success) {
+                setSearchData(res.data.data || []);
+            } else {
+                setSearchData([]);
+            }
+
+        } catch (error) {
+            console.error(error);
+            toast.error("Something went wrong");
+            setSearchData([]);
+        } finally {
+            setSearchLoading(false);
+        }
+    };
 
     return (
         <>
@@ -408,6 +489,7 @@ Status: ${row.is_sold === 1 ? "Sold" : "Unsold"}
                 </div>
             </div>
 
+            {/* // Select Company */}
             <Modal
                 show={showSearchModal}
                 onHide={() => setShowSearchModal(false)}
@@ -452,10 +534,10 @@ Status: ${row.is_sold === 1 ? "Sold" : "Unsold"}
                 </Modal.Body>
             </Modal>
 
-
+            {/* // 1st Prize  */}
             <Modal
                 show={showTableModal}
-                onHide={() => setShowTableModal(false)}
+                onHide={handleCloseTableModal}
                 centered
                 size="md"
             >
@@ -489,6 +571,143 @@ Status: ${row.is_sold === 1 ? "Sold" : "Unsold"}
                         }
                     />
 
+                </Modal.Body>
+            </Modal>
+
+            {/* // Number Search Modal */}
+            <Modal
+                show={showNumberModal}
+                onHide={handleCloseNumberModal}
+                centered
+                size="lg"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        <span style={{ color: "#2563eb" }}>
+                            {searchType}
+                        </span>{" "}
+                        <span style={{ color: "#ef4444" }}>
+                            Ticket Search
+                        </span>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Row className="align-items-end g-2">
+                            <Col md={4}>
+                                <Form.Group>
+                                    <Form.Label>Select Week</Form.Label>
+                                    <Form.Select
+                                        value={selectedWeek}
+                                        onChange={(e) => setSelectedWeek(e.target.value)}
+                                    >
+                                        <option value="">-- Select Week --</option>
+                                        {weekOptions.map((week) => (
+                                            <option key={week.value} value={week.value}>
+                                                {week.label}
+                                            </option>
+                                        ))}
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                            <Col md={4}>
+                                <Form.Group>
+                                    <Form.Label>Enter Ticket No.</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        value={ticketInput}
+                                        maxLength={
+                                            searchType === "4digit" ? 4 :
+                                                searchType === "middle2" ? 2 :
+                                                    searchType === "last2" ? 2 : undefined
+                                        }
+                                        placeholder={
+                                            searchType === "4digit"
+                                                ? "Enter 4 Digit Ticket Number"
+                                                : searchType === "middle2"
+                                                    ? "Enter Middle 2 Digit Number"
+                                                    : searchType === "last2"
+                                                        ? "Enter Last 2 Digit Number"
+                                                        : "Enter Ticket Number"
+                                        }
+                                        onChange={(e) => {
+                                            const value = e.target.value.replace(/\D/g, "");
+                                            setTicketInput(value);
+                                        }}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md={4}>
+                                <Button
+                                    className="w-100"
+                                    style={{
+                                        background: "linear-gradient(90deg, #1e40af, #dc2626)",
+                                        border: "none",
+                                        color: "#fff"
+                                    }}
+                                    onClick={handleSearch}
+                                >
+                                    Search
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Form>
+
+                    {hasSearched && (
+                        <div className="mt-4">
+                            <DataTable
+                                columns={[
+                                    {
+                                        name: "Date",
+                                        selector: row =>
+                                            new Date(row.ticket_date).toLocaleDateString("en-GB"),
+                                        sortable: true
+                                    },
+                                    {
+                                        name: "Ticket No",
+                                        selector: row => row.ticket_no,
+                                        sortable: true
+                                    },
+                                    {
+                                        name: "Prize Type",
+                                        selector: row => row.prize_type,
+                                    },
+                                    {
+                                        name: "Amount",
+                                        selector: row => `₹ ${Number(row.amount).toLocaleString()}`,
+                                    },
+                                    {
+                                        name: "Status",
+                                        cell: row => (
+                                            <span style={{
+                                                color: row.is_sold ? "green" : "red",
+                                                fontWeight: 600
+                                            }}>
+                                                {row.is_sold ? "Sold" : "Unsold"}
+                                            </span>
+                                        )
+                                    }
+                                ]}
+                                data={searchData}
+                                progressPending={searchLoading}
+                                pagination
+                                paginationPerPage={5}
+                                paginationRowsPerPageOptions={[5, 20, 50, 100]}
+                                highlightOnHover
+                                striped
+                                responsive
+                                noDataComponent={
+                                    <div style={{
+                                        padding: 20,
+                                        color: "red",
+                                        fontWeight: 600
+                                    }}>
+                                        No record found!
+                                    </div>
+                                }
+                            />
+                        </div>
+                    )}
                 </Modal.Body>
             </Modal>
         </>
