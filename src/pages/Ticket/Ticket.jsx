@@ -37,6 +37,7 @@ const Ticket = () => {
     const [firstPrizeData, setFirstPrizeData] = useState([]);
     const [firstPrizeLoading, setFirstPrizeLoading] = useState(false);
     const [showTableModal, setShowTableModal] = useState(false);
+    
 
     const fetchCompanies = async () => {
         try {

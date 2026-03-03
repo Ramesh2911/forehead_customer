@@ -135,6 +135,7 @@ const Header = () => {
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
+                  background: "linear-gradient(90deg, #2a2f4a, #1e40af)",
                 }}
               >
                 {location}
@@ -281,6 +282,7 @@ const Header = () => {
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
+                background: "linear-gradient(90deg, #2a2f4a, #1e40af)",
               }}
             >
               {location}
