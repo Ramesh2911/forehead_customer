@@ -368,7 +368,7 @@ Status: ${row.is_sold === 1 ? "Sold" : "Unsold"}
                     />
 
                     <DashboardCard
-                        title="My Put Result List"
+                        title="My PWT List"
                         subtitle="Check Uploaded Results"
                         gradient="linear-gradient(135deg, #22c55e, #16a34a)"
                         Icon={FaListAlt}

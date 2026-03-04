@@ -1,17 +1,52 @@
 import API from "./api";
 import {
+  OTPS,
   AUTH,
   COMPANIES,
   SUBCRIPTIONS,
   TICKETS,
 } from "./endpoints";
 
-export const loginApi = (payload) => {
-  return API.post(AUTH.LOGIN, payload);
+export const sendOtpApi = (payload) => {
+  return API.post(OTPS.SENDOTP, payload);
 };
 
-export const logoutApi = () => {
-  return API.post(AUTH.LOGOUT);
+export const resendOtpApi = (payload) => {
+  return API.post(OTPS.RESENDOTP, payload);
+};
+
+export const verifyOtpApi = (payload) => {
+  return API.post(OTPS.VERIFYOTP, payload);
+};
+
+export const getStatesApi = () => {
+  return API.get("/states");
+};
+
+export const getDistrictsApi = (stateId) => {
+  return API.get("/districts", {
+    params: { state_id: stateId },
+  });
+}
+
+export const getCitiesApi = (districtId) => {
+  return API.get("/cities", {
+    params: { dist_id: districtId },
+  });
+}
+
+export const getPoliceStationsApi = (cityId) => {
+  return API.get("/police-stations", {
+    params: { city_id: cityId },
+  });
+}
+
+export const registrationApi = (payload) => {
+  return API.post(AUTH.REGISTRATION, payload);
+};
+
+export const loginApi = (payload) => {
+  return API.post(AUTH.LOGIN, payload);
 };
 
 export const getAllSubcription = () => {

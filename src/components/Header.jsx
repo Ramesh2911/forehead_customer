@@ -11,7 +11,8 @@ import {
   FaSignOutAlt,
   FaMapMarkerAlt,
   FaSearch,
-  FaCreditCard
+  FaCreditCard,
+  FaGlobe
 } from "react-icons/fa";
 import logo from "../assets/logo.png";
 
@@ -23,8 +24,16 @@ const Header = () => {
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState("Detecting...");
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-
+  const [user, setUser] = useState(null);
   const isMobile = screenWidth < 768;
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
@@ -64,7 +73,13 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/");
+  };
+
   return (
+
     <header
       style={{
         backgroundColor: "#d1fae5",
@@ -178,6 +193,12 @@ const Header = () => {
             flexShrink: 0,
           }}
         >
+          <FaGlobe
+            size={24}
+            color="#1e40af"
+            style={{ cursor: "pointer" }}
+            title="Language"
+          />
           <div style={{ position: "relative" }}>
             <FaBell size={30} color="#1e40af" />
             <span
@@ -220,12 +241,23 @@ const Header = () => {
                 }}
               >
                 {[
-                  { label: "Login", icon: <FaSignInAlt size={18} style={{ color: "#1e40af" }} />, path: "/login" },
+                  {
+                    label: user ? (
+                      <span style={{ fontSize: "14px", fontWeight: "600" }}>
+                        <span style={{ color: "#2563eb" }}>Welcome, </span>
+                        <span style={{ color: "#ef4444" }}>{user.name}</span>
+                      </span>
+                    ) : "Login",
+                    icon: user
+                      ? <FaUserCircle size={18} style={{ color: "#1e40af" }} />
+                      : <FaSignInAlt size={18} style={{ color: "#1e40af" }} />,
+                    path: user ? null : "/login"
+                  },
                   { label: "Ticket", icon: <FaTicketAlt size={18} style={{ color: "#1e40af" }} />, path: "/ticket" },
                   { label: "Result", icon: <FaChartBar size={18} style={{ color: "#1e40af" }} /> },
                   { label: "Rules", icon: <FaUserShield size={18} style={{ color: "#1e40af" }} /> },
                   { label: "Notice", icon: <FaBullhorn size={18} style={{ color: "#1e40af" }} /> },
-                  { label: "Subscription", icon: <FaCreditCard size={18} style={{ color: "#1e40af" }} />, path: "/subcription" },
+                  { label: "Subscription", icon: <FaCreditCard size={18} style={{ color: "#1e40af" }} />, path: "/subscription" },
                   { label: "Logout", icon: <FaSignOutAlt />, danger: true },
                 ].map((item, index) => (
                   <div
@@ -249,6 +281,12 @@ const Header = () => {
                     }
                     onClick={() => {
                       setShowDropdown(false);
+
+                      if (item.label === "Logout") {
+                        handleLogout();
+                        return;
+                      }
+
                       if (item.path) navigate(item.path);
                     }}
                   >

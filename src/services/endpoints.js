@@ -1,7 +1,19 @@
+export const OTPS = {
+  SENDOTP: "/send-otp",
+  RESENDOTP: "/resend-otp",
+  VERIFYOTP: "/verify-otp",
+};
+
+export const LOCATIONS = {
+  STATES: "/states",
+  DISTRICTS: "/districts",
+  CITIES: "/cities",
+  POLICESTATIONS: "/police-stations",
+};
+
 export const AUTH = {
-  LOGIN: "/login",
-  LOGOUT: "/super-admin/logout",
-  CHANGEPASSWORD: "/change-password",
+  REGISTRATION: "/customer-register",
+  LOGIN: "/customer-login",
 };
 
 export const SUBCRIPTIONS = {
@@ -17,5 +29,7 @@ export const TICKETS = {
   FIRSTPRIZELIST: "/first-prize",
   TICKETSEARCHBYWEEK: "/ticket-search-week",
 };
+
+
 
 
