@@ -67,6 +67,7 @@ const Home = () => {
                     {
                         icon: <FaHeadset size={50} />,
                         title: "Support",
+                        path: "/support",
                         subtitle: "24/7 customer help",
                         gradient: "linear-gradient(135deg, #bfdbfe, #93c5fd)",
                     },

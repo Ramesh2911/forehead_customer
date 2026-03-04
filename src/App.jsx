@@ -19,6 +19,7 @@ import PrivacyPolicy from "./pages/Privacy/PrivacyPolicy";
 import Terms from "./pages/Terms/Terms";
 import About from "./pages/About/About";
 import Ticket from "./pages/Ticket/Ticket";
+import Support from "./pages/Support/Support";
 
 
 
@@ -37,6 +38,7 @@ function App() {
             <Route path="/terms" element={<Terms />} />
             <Route path="/about" element={<About />} />
             <Route path="/ticket" element={<Ticket />} />
+            <Route path="/support" element={<Support />} />
           </Route>
         </Routes>
       </BrowserRouter>

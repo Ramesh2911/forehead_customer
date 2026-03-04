@@ -36,7 +36,18 @@ const Ticket = () => {
         { value: "1", label: "1 Week" },
         { value: "2", label: "2 Week" },
         { value: "3", label: "3 Week" },
-        { value: "4", label: "4 Week" }
+        { value: "4", label: "4 Week" },
+        { value: "2m", label: "2 Month" },
+        { value: "3m", label: "3 Month" },
+        { value: "4m", label: "4 Month" },
+        { value: "5m", label: "5 Month" },
+        { value: "6m", label: "6 Month" },
+        { value: "7m", label: "7 Month" },
+        { value: "8m", label: "8 Month" },
+        { value: "9m", label: "9 Month" },
+        { value: "10m", label: "10 Month" },
+        { value: "11m", label: "11 Month" },
+        { value: "12m", label: "12 Month" },
     ];
 
     const [showSearchModal, setShowSearchModal] = useState(false);
