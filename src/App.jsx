@@ -22,8 +22,7 @@ import Terms from "./pages/Terms/Terms";
 import About from "./pages/About/About";
 import Ticket from "./pages/Ticket/Ticket";
 import Support from "./pages/Support/Support";
-
-
+import TypeRetailers from "./pages/Ticket/TypeRetailers";
 
 function App() {
   return (
@@ -45,6 +44,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Ticket />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/type-retailers"
+              element={
+                <ProtectedRoute>
+                  <TypeRetailers />
                 </ProtectedRoute>
               }
             />

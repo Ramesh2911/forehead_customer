@@ -30,6 +30,10 @@ export const TICKETS = {
   TICKETSEARCHBYWEEK: "/ticket-search-week",
 };
 
+export const RETAILERS ={
+  NEARBYRETAILERS: "/nearby-retailers",
+}
+
 
 
 

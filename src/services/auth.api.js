@@ -1,10 +1,12 @@
 import API from "./api";
 import {
   OTPS,
+  LOCATIONS,
   AUTH,
   COMPANIES,
   SUBCRIPTIONS,
   TICKETS,
+  RETAILERS,
 } from "./endpoints";
 
 export const sendOtpApi = (payload) => {
@@ -20,23 +22,23 @@ export const verifyOtpApi = (payload) => {
 };
 
 export const getStatesApi = () => {
-  return API.get("/states");
+  return API.get(LOCATIONS.STATES);
 };
 
 export const getDistrictsApi = (stateId) => {
-  return API.get("/districts", {
+  return API.get(LOCATIONS.DISTRICTS, {
     params: { state_id: stateId },
   });
 }
 
 export const getCitiesApi = (districtId) => {
-  return API.get("/cities", {
+  return API.get(LOCATIONS.CITIES, {
     params: { dist_id: districtId },
   });
 }
 
 export const getPoliceStationsApi = (cityId) => {
-  return API.get("/police-stations", {
+  return API.get(LOCATIONS.POLICESTATIONS, {
     params: { city_id: cityId },
   });
 }
@@ -78,6 +80,16 @@ export const getTicketListByWeek = (id, week, ticketNo) => {
     },
   });
 };
+
+export const getNearbyRetailers = (id, latitude, longitude) => {
+  return API.get(RETAILERS.NEARBYRETAILERS, {
+    params: {
+      company_id: id,
+      latitude: latitude,
+      longitude: longitude,
+    },
+  });
+}
 
 
 

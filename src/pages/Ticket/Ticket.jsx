@@ -18,7 +18,8 @@ import {
     FaTrophy,
     FaCalendarAlt,
     FaSearch,
-    FaInfoCircle
+    FaInfoCircle,
+    FaUpload
 } from "react-icons/fa";
 import {
     getAllCompanies,
@@ -29,9 +30,11 @@ import {
 import { useState } from "react";
 import DataTable from "react-data-table-component";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Ticket = () => {
 
+    const navigate = useNavigate();
     const weekOptions = [
         { value: "1", label: "1 Week" },
         { value: "2", label: "2 Week" },
@@ -63,7 +66,6 @@ const Ticket = () => {
     const [searchData, setSearchData] = useState([]);
     const [searchLoading, setSearchLoading] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
-
 
     const fetchCompanies = async () => {
         try {
@@ -342,6 +344,39 @@ Status: ${row.is_sold === 1 ? "Sold" : "Unsold"}
                         display: "inline-block",
                     }}
                 >
+                    Ticket Upload
+                </div>
+
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(260px, 320px))",
+                        gap: "16px",
+                        justifyContent: "flex-start"
+                    }}
+                >
+
+                    <DashboardCard
+                        title="Ticket Upload"
+                        subtitle="Upload New Tickets"
+                        gradient="linear-gradient(135deg, #3b82f6, #1e40af)"
+                        Icon={FaUpload}
+                    />
+                </div>
+            </div>
+
+            <div style={cardStyle}>
+                <div
+                    style={{
+                        fontWeight: "700",
+                        fontSize: "18px",
+                        marginBottom: "14px",
+                        background: "linear-gradient(90deg, #1e40af, #dc2626)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        display: "inline-block",
+                    }}
+                >
                     Ticket Details
                 </div>
 
@@ -379,6 +414,7 @@ Status: ${row.is_sold === 1 ? "Sold" : "Unsold"}
                         subtitle="Browse By Ticket Type"
                         gradient="linear-gradient(135deg, #fbbf24, #f59e0b)"
                         Icon={FaTags}
+                        onClick={() => navigate("/type-retailers")}
                     />
                 </div>
             </div>
