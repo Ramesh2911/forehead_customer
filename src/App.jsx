@@ -23,6 +23,8 @@ import About from "./pages/About/About";
 import Ticket from "./pages/Ticket/Ticket";
 import Support from "./pages/Support/Support";
 import TypeRetailers from "./pages/Ticket/TypeRetailers";
+import TicketUpload from "./pages/Ticket/TicketUpload";
+import TicketHistory from "./pages/Ticket/TicketHistory";
 
 function App() {
   return (
@@ -52,6 +54,22 @@ function App() {
               element={
                 <ProtectedRoute>
                   <TypeRetailers />
+                </ProtectedRoute>
+              }
+            />
+             <Route
+              path="/ticket-upload"
+              element={
+                <ProtectedRoute>
+                  <TicketUpload />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/ticket-history"
+              element={
+                <ProtectedRoute>
+                  <TicketHistory />
                 </ProtectedRoute>
               }
             />

@@ -103,9 +103,17 @@ export const customerFollowRetailers = (customerId) => {
   });
 };
 
+export const ticketUploadApi = (payload) => {
+  return API.post(TICKETS.TICKETSUPLOAD, payload);
+};
 
-
-
+export const getCustomerTickets = (customerId) => {
+  return API.get(TICKETS.CUSTOMERTICKETLIST, {
+    params: {
+      customer_id: customerId
+    }
+  });
+};
 
 
 

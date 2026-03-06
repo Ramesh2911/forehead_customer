@@ -361,6 +361,7 @@ Status: ${row.is_sold === 1 ? "Sold" : "Unsold"}
                         subtitle="Upload New Tickets"
                         gradient="linear-gradient(135deg, #3b82f6, #1e40af)"
                         Icon={FaUpload}
+                        onClick={() => navigate("/ticket-upload")}
                     />
                 </div>
             </div>
@@ -401,6 +402,7 @@ Status: ${row.is_sold === 1 ? "Sold" : "Unsold"}
                         subtitle="View Past Tickets"
                         gradient="linear-gradient(135deg, #ef4444, #dc2626)"
                         Icon={FaHistory}
+                        onClick={() => navigate("/ticket-history")}
                     />
 
                     <DashboardCard
@@ -415,7 +417,7 @@ Status: ${row.is_sold === 1 ? "Sold" : "Unsold"}
                         subtitle="Browse By Ticket Type"
                         gradient="linear-gradient(135deg, #fbbf24, #f59e0b)"
                         Icon={FaTags}
-                       onClick={() => navigate("/type-retailers?type=ticket")}
+                        onClick={() => navigate("/type-retailers?type=ticket")}
                     />
                 </div>
             </div>

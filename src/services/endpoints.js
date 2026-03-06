@@ -28,6 +28,8 @@ export const COMPANIES = {
 export const TICKETS = {
   FIRSTPRIZELIST: "/first-prize",
   TICKETSEARCHBYWEEK: "/ticket-search-week",
+  TICKETSUPLOAD: "/add-customer-ticket",
+  CUSTOMERTICKETLIST: "/customer-tickets"
 };
 
 export const RETAILERS = {

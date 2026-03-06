@@ -33,8 +33,10 @@ const TypeRetailers = () => {
     }, []);
 
     useEffect(() => {
-        loadFollowRetailers();
-    }, []);
+        if (pageType === "follow") {
+            loadFollowRetailers();
+        }
+    }, [pageType]);
 
     const fetchCompanies = async () => {
         try {
