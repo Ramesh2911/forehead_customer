@@ -91,7 +91,17 @@ export const getNearbyRetailers = (id, latitude, longitude) => {
   });
 }
 
+export const followRetailer = (payload) => {
+  return API.post(RETAILERS.FOLLOWRETAILERS, payload);
+};
 
+export const customerFollowRetailers = (customerId) => {
+  return API.get(RETAILERS.FOLLOWEDRETAILERS, {
+    params: {
+      customer_id: customerId
+    }
+  });
+};
 
 
 

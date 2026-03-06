@@ -30,8 +30,10 @@ export const TICKETS = {
   TICKETSEARCHBYWEEK: "/ticket-search-week",
 };
 
-export const RETAILERS ={
+export const RETAILERS = {
   NEARBYRETAILERS: "/nearby-retailers",
+  FOLLOWRETAILERS: "/follow-retailer",
+  FOLLOWEDRETAILERS: "/followed-retailers"
 }
 
 

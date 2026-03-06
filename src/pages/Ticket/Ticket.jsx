@@ -393,6 +393,7 @@ Status: ${row.is_sold === 1 ? "Sold" : "Unsold"}
                         subtitle="View Followed Shops"
                         gradient="linear-gradient(135deg, #3b82f6, #1e40af)"
                         Icon={FaBookmark}
+                        onClick={() => navigate("/type-retailers?type=follow")}
                     />
 
                     <DashboardCard
@@ -414,7 +415,7 @@ Status: ${row.is_sold === 1 ? "Sold" : "Unsold"}
                         subtitle="Browse By Ticket Type"
                         gradient="linear-gradient(135deg, #fbbf24, #f59e0b)"
                         Icon={FaTags}
-                        onClick={() => navigate("/type-retailers")}
+                       onClick={() => navigate("/type-retailers?type=ticket")}
                     />
                 </div>
             </div>

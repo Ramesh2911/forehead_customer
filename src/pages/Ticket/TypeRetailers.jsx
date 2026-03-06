@@ -5,25 +5,35 @@ import {
     from "react";
 import {
     getAllCompanies,
-    getNearbyRetailers
+    getNearbyRetailers,
+    followRetailer,
+    customerFollowRetailers
 }
     from "../../services/auth.api";
 import { toast } from "react-toastify";
 import banner from "../../assets/banner.jpeg";
 import {
-FaHeart,
-FaRegHeart
+    FaHeart,
+    FaRegHeart
 }
     from "react-icons/fa";
+import { useSearchParams } from "react-router-dom";
 
 const TypeRetailers = () => {
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    const [searchParams] = useSearchParams();
+    const pageType = searchParams.get("type");
     const [companies, setCompanies] = useState([]);
     const [retailers, setRetailers] = useState([]);
-    const [liked, setLiked] = useState(false);
+    const [favorites, setFavorites] = useState({});
 
     useEffect(() => {
         fetchCompanies();
+    }, []);
+
+    useEffect(() => {
+        loadFollowRetailers();
     }, []);
 
     const fetchCompanies = async () => {
@@ -38,6 +48,29 @@ const TypeRetailers = () => {
         } catch (error) {
             console.error("Company fetch error:", error);
         }
+    };
+
+    const loadFollowRetailers = async () => {
+
+        try {
+            const { data } = await customerFollowRetailers(user.id);
+
+            if (data.success) {
+
+                const favObj = {};
+
+                data.data.forEach(item => {
+                    favObj[item.retailer_id] = true;
+                });
+
+                setFavorites(favObj);
+
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
+
     };
 
     const handleCompanyClick = (companyId) => {
@@ -78,6 +111,30 @@ const TypeRetailers = () => {
 
         );
 
+    };
+
+    const handleFollow = async (retailerId) => {
+        try {
+
+            const payload = {
+                customer_id: user.id,
+                retailer_id: retailerId
+            };
+
+            const { data } = await followRetailer(payload);
+
+            if (data.success) {
+
+                setFavorites(prev => ({
+                    ...prev,
+                    [retailerId]: data.is_follow === 1
+                }));
+
+            }
+
+        } catch (error) {
+            console.error("Follow error:", error);
+        }
     };
 
     return (
@@ -137,7 +194,6 @@ const TypeRetailers = () => {
                     >
 
                         {retailers.map((item) => (
-
                             <div
                                 key={item.id}
                                 style={{
@@ -167,29 +223,34 @@ const TypeRetailers = () => {
                                             objectFit: "cover"
                                         }}
                                     />
-                                    <div
-                                        onClick={() => setLiked(!liked)}
-                                        style={{
-                                            position: "absolute",
-                                            top: "10px",
-                                            right: "10px",
-                                            background: "#fff",
-                                            width: "32px",
-                                            height: "32px",
-                                            borderRadius: "50%",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            boxShadow: "0 3px 8px rgba(0,0,0,0.2)",
-                                            cursor: "pointer"
-                                        }}
-                                    >
-                                        {liked ? (
-                                            <FaHeart color="#ef4444" size={16} />
-                                        ) : (
-                                            <FaRegHeart color="#6b7280" size={16} />
-                                        )}
-                                    </div>
+                                    {pageType === "follow" && (
+                                        <div
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleFollow(item.id);
+                                            }}
+                                            style={{
+                                                position: "absolute",
+                                                top: "10px",
+                                                right: "10px",
+                                                background: "#fff",
+                                                width: "32px",
+                                                height: "32px",
+                                                borderRadius: "50%",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                boxShadow: "0 3px 8px rgba(0,0,0,0.2)",
+                                                cursor: "pointer"
+                                            }}
+                                        >
+                                            {favorites[item.id] ? (
+                                                <FaHeart color="#ef4444" size={16} />
+                                            ) : (
+                                                <FaRegHeart color="#6b7280" size={16} />
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div style={{ padding: "14px" }}>

@@ -43,6 +43,7 @@ const Home = () => {
                         icon: <FaStore size={50} />,
                         title: "Nearby Shops",
                         subtitle: "Find shops near you",
+                        path: "/type-retailers?type=nearby",
                         gradient: "linear-gradient(135deg, #93c5fd, #60a5fa)",
                     },
                     {
