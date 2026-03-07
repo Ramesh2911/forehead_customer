@@ -7,6 +7,7 @@ import {
   SUBCRIPTIONS,
   TICKETS,
   RETAILERS,
+  DRAWS,
 } from "./endpoints";
 
 export const sendOtpApi = (payload) => {
@@ -89,7 +90,16 @@ export const getNearbyRetailers = (id, latitude, longitude) => {
       longitude: longitude,
     },
   });
-}
+};
+
+export const getNearbyAllRetailers = (latitude, longitude) => {
+  return API.get(RETAILERS.ALLRETAILERS, {
+    params: {
+      latitude: latitude,
+      longitude: longitude,
+    },
+  });
+};
 
 export const followRetailer = (payload) => {
   return API.post(RETAILERS.FOLLOWRETAILERS, payload);
@@ -113,6 +123,10 @@ export const getCustomerTickets = (customerId) => {
       customer_id: customerId
     }
   });
+};
+
+export const getDrawsSchedule = () => {
+  return API.get(DRAWS.DRAWSSCHDULE);
 };
 
 

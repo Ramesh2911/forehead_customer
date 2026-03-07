@@ -35,8 +35,13 @@ export const TICKETS = {
 export const RETAILERS = {
   NEARBYRETAILERS: "/nearby-retailers",
   FOLLOWRETAILERS: "/follow-retailer",
-  FOLLOWEDRETAILERS: "/followed-retailers"
-}
+  FOLLOWEDRETAILERS: "/followed-retailers",
+  ALLRETAILERS: "/nearby-all-retailers",
+};
+
+export const DRAWS = {
+  DRAWSSCHDULE: "/draw-schedule",
+};
 
 
 

@@ -25,6 +25,8 @@ import Support from "./pages/Support/Support";
 import TypeRetailers from "./pages/Ticket/TypeRetailers";
 import TicketUpload from "./pages/Ticket/TicketUpload";
 import TicketHistory from "./pages/Ticket/TicketHistory";
+import Draws from "./pages/Draws/Draws";
+import Result from "./pages/Result/Result";
 
 function App() {
   return (
@@ -57,7 +59,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-             <Route
+            <Route
               path="/ticket-upload"
               element={
                 <ProtectedRoute>
@@ -70,6 +72,22 @@ function App() {
               element={
                 <ProtectedRoute>
                   <TicketHistory />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/draws"
+              element={
+                <ProtectedRoute>
+                  <Draws />
+                </ProtectedRoute>
+              }
+            />
+             <Route
+              path="/results"
+              element={
+                <ProtectedRoute>
+                  <Result />
                 </ProtectedRoute>
               }
             />
