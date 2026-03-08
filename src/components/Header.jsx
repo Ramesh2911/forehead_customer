@@ -113,7 +113,7 @@ const Header = () => {
 
           <span style={{ fontSize: "20px", fontWeight: "700" }}>
             <span style={{ color: "#1e40af" }}>Ticket</span>
-            <span style={{ color: "#dc2626" }}>map</span>
+            <span style={{ color: "#dc2626" }}>Map</span>
           </span>
         </Link>
 
@@ -254,9 +254,9 @@ const Header = () => {
                     path: user ? null : "/login"
                   },
                   { label: "Ticket", icon: <FaTicketAlt size={18} style={{ color: "#1e40af" }} />, path: "/ticket" },
-                  { label: "Result", icon: <FaChartBar size={18} style={{ color: "#1e40af" }} /> },
-                  { label: "Rules", icon: <FaUserShield size={18} style={{ color: "#1e40af" }} /> },
-                  { label: "Notice", icon: <FaBullhorn size={18} style={{ color: "#1e40af" }} /> },
+                  { label: "Result", icon: <FaChartBar size={18} style={{ color: "#1e40af" , path: "/results" }} /> },
+                  // { label: "Rules", icon: <FaUserShield size={18} style={{ color: "#1e40af" }} /> },
+                  // { label: "Notice", icon: <FaBullhorn size={18} style={{ color: "#1e40af" }} /> },
                   { label: "Subscription", icon: <FaCreditCard size={18} style={{ color: "#1e40af" }} />, path: "/subscription" },
                   { label: "Logout", icon: <FaSignOutAlt />, danger: true },
                 ].map((item, index) => (

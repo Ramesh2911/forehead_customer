@@ -27,6 +27,17 @@ const TypeRetailers = () => {
     const [companies, setCompanies] = useState([]);
     const [retailers, setRetailers] = useState([]);
     const [favorites, setFavorites] = useState({});
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     useEffect(() => {
         fetchCompanies();
@@ -166,7 +177,9 @@ const TypeRetailers = () => {
                             fontWeight: "500",
                             cursor: "pointer",
                             boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-                            transition: "0.2s"
+                            transition: "0.2s",
+                            width: isMobile ? "100%" : "auto",
+                            textAlign: "center",
                         }}
                         onMouseEnter={(e) =>
                             (e.currentTarget.style.transform = "scale(1.05)")

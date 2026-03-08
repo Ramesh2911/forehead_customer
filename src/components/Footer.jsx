@@ -57,7 +57,7 @@ const Footer = () => {
               }}
             >
               <span style={{ color: "#2563eb" }}>Ticket</span>
-              <span style={{ color: "#ef4444" }}>map</span>
+              <span style={{ color: "#ef4444" }}>Map</span>
             </div>
 
             <p
@@ -70,6 +70,16 @@ const Footer = () => {
             >
               Your trusted platform for lottery tickets, draws
               and real-time results.
+            </p>
+            <p
+              style={{
+                color: "#9ca3af",
+                fontSize: "14px",
+                lineHeight: "1.7",
+                maxWidth: "320px",
+              }}
+            >
+              Ticketmap is a location-based ticket information system that helps users find which shops have specific tickets available and where those shops are located.
             </p>
           </div>
 
