@@ -471,7 +471,7 @@ const Home = () => {
                                             }}
                                         >
                                             <FaMapMarkerAlt style={{ color: "#dc2626", fontSize: "14px" }} />
-                                            {shop.address} - {shop.distance.toFixed(2)} km away
+                                            {shop.address} - {Number(shop?.distance ?? 0).toFixed(2)} km away
                                         </p>
                                     </div>
                                 </div>
