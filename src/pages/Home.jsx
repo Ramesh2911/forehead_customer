@@ -115,7 +115,10 @@ const Home = () => {
             <div
                 style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+                    // gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+                    gridTemplateColumns: isMobile
+                        ? "repeat(2, 1fr)"
+                        : "repeat(auto-fit, minmax(160px, 1fr))",
                     gap: "15px",
                     marginBottom: "20px",
                 }}
@@ -132,7 +135,11 @@ const Home = () => {
                                 <img
                                     src={nearshop}
                                     alt="Nearby Shops"
-                                    style={{ width: "120px", height: "120px", objectFit: "contain" }}
+                                    style={{
+                                        width: isMobile ? "70px" : "120px",
+                                        height: isMobile ? "70px" : "120px",
+                                        objectFit: "contain"
+                                    }}
                                 />
                             </div>
                         ),
@@ -152,7 +159,11 @@ const Home = () => {
                                 <img
                                     src={ticket}
                                     alt="Lottery Tickets"
-                                    style={{ width: "120px", height: "120px", objectFit: "contain" }}
+                                    style={{
+                                        width: isMobile ? "70px" : "120px",
+                                        height: isMobile ? "70px" : "120px",
+                                        objectFit: "contain"
+                                    }}
                                 />
                             </div>
                         ),
@@ -172,7 +183,11 @@ const Home = () => {
                                 <img
                                     src={result}
                                     alt="Lottery Results"
-                                    style={{ width: "120px", height: "120px", objectFit: "contain" }}
+                                    style={{
+                                        width: isMobile ? "70px" : "120px",
+                                        height: isMobile ? "70px" : "120px",
+                                        objectFit: "contain"
+                                    }}
                                 />
                             </div>
                         ),
@@ -192,7 +207,11 @@ const Home = () => {
                                 <img
                                     src={draws}
                                     alt="Lottery Draws"
-                                    style={{ width: "120px", height: "120px", objectFit: "contain" }}
+                                    style={{
+                                        width: isMobile ? "70px" : "120px",
+                                        height: isMobile ? "70px" : "120px",
+                                        objectFit: "contain"
+                                    }}
                                 />
                             </div>
                         ),
@@ -212,7 +231,11 @@ const Home = () => {
                                 <img
                                     src={care}
                                     alt="Customer Care"
-                                    style={{ width: "120px", height: "120px", objectFit: "contain" }}
+                                    style={{
+                                        width: isMobile ? "70px" : "120px",
+                                        height: isMobile ? "70px" : "120px",
+                                        objectFit: "contain"
+                                    }}
                                 />
                             </div>
                         ),
@@ -227,7 +250,8 @@ const Home = () => {
                         style={{
                             background: item.gradient,
                             borderRadius: "22px",
-                            padding: "25px 15px",
+                            // padding: "25px 15px",
+                            padding: isMobile ? "15px 10px" : "25px 15px",
                             boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
                             textAlign: "center",
                             cursor: "pointer",
@@ -307,7 +331,7 @@ const Home = () => {
                         style={{
                             margin: 0,
                             fontWeight: "700",
-                            fontSize: "18px",
+                            fontSize: isMobile ? "15px" : "18px",
                             background: "linear-gradient(90deg, #1e40af, #dc2626)",
                             WebkitBackgroundClip: "text",
                             WebkitTextFillColor: "transparent",
@@ -345,7 +369,7 @@ const Home = () => {
                             style={{
                                 background: getCompanyColor(draw.company_id),
                                 color: "#fff",
-                                padding: "30px 20px",
+                                padding: isMobile ? "16px 10px" : "30px 20px",
                                 borderRadius: "14px",
                                 textAlign: "center",
                                 transition: "0.3s",
@@ -355,7 +379,7 @@ const Home = () => {
                                 {draw.name}
                             </h5>
 
-                            <p style={{ margin: 0, fontSize: "15px" }}>
+                            <p style={{ margin: 0, fontSize: isMobile ? "13px" : "15px" }}>
                                 {formatTime(draw.time)} Result
                             </p>
                         </div>
@@ -409,7 +433,7 @@ const Home = () => {
                         style={{
                             display: "grid",
                             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                            gap: "20px",
+                            gap: isMobile ? "10px" : "20px",
                         }}
                     >
                         {(showAll ? allRetailers : allRetailers.slice(0, 2)).map((shop, index) => (
@@ -418,7 +442,7 @@ const Home = () => {
                                 style={{
                                     background: "#f9fafb",
                                     padding: "18px",
-                                    borderRadius: "14px",
+                                    borderRadius: isMobile ? "10px" : "14px",
                                     boxShadow: "0 6px 20px rgba(0,0,0,0.05)",
                                 }}
                             >

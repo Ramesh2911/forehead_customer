@@ -7,6 +7,7 @@ const Draws = () => {
 
     const [key, setKey] = useState("draws");
     const [drawList, setDrawList] = useState([]);
+    const [selectedDate, setSelectedDate] = useState("");
 
     useEffect(() => {
         fetchDraws();
@@ -92,27 +93,6 @@ const Draws = () => {
             <Row>
                 <Col>
                     <Tab.Container activeKey={key} onSelect={(k) => setKey(k)}>
-
-                        {/* <Nav className="draw-tabs">
-                            <Nav.Item>
-                                <Nav.Link eventKey="draws">Upcoming</Nav.Link>
-                            </Nav.Item>
-
-                            <Nav.Item>
-                                <Nav.Link eventKey="results">Results</Nav.Link>
-                            </Nav.Item>
-                            <FaCalendarAlt
-                                style=
-                                {{
-                                    marginLeft: "auto",
-                                    color: "#4f7cff",
-                                    fontSize: "18px",
-                                    marginTop: "6px"
-
-                                }}
-                            />
-                        </Nav> */}
-
                         <div className="draw-tabs-wrapper">
                             <Nav className="draw-tabs">
                                 <Nav.Item>
@@ -124,20 +104,24 @@ const Draws = () => {
                                 </Nav.Item>
                             </Nav>
 
-                            <div className="calendar-btn">
+                            <div className="calendar-btn" onClick={() => document.getElementById("drawCalendar").showPicker()}>
                                 <FaCalendarAlt />
+
+                                <input
+                                    type="date"
+                                    id="drawCalendar"
+                                    value={selectedDate}
+                                    onChange={(e) => setSelectedDate(e.target.value)}
+                                    style={{ display: "none" }}
+                                />
                             </div>
                         </div>
 
                         <Tab.Content>
-
-                            {/* Upcoming Draws */}
                             <Tab.Pane eventKey="draws">
-
                                 <div className="timeline">
-
                                     {drawList.length > 0 ? (
-                                        getFilteredDraws().map((item, index) => {
+                                        drawList?.map((item, index) => {
 
                                             let status = "upcoming";
 
@@ -169,15 +153,15 @@ const Draws = () => {
                                                             <h6>{item.name}</h6>
 
                                                             {status === "current" && (
-                                                                <span className="status current">Current Betting</span>
+                                                                <span className="status current">Current</span>
                                                             )}
 
                                                             {status === "closed" && (
-                                                                <span className="status closed">Close Betting</span>
+                                                                <span className="status closed">Closed</span>
                                                             )}
 
                                                             {status === "upcoming" && (
-                                                                <span className="status upcoming">Upcoming Betting</span>
+                                                                <span className="status upcoming">Upcoming</span>
                                                             )}
 
                                                         </div>
@@ -196,16 +180,11 @@ const Draws = () => {
                                 </div>
 
                             </Tab.Pane>
-
-                            {/* Result List */}
                             <Tab.Pane eventKey="results">
                                 <p>Result list will come here</p>
                             </Tab.Pane>
-
                         </Tab.Content>
-
                     </Tab.Container>
-
                 </Col>
             </Row>
 
