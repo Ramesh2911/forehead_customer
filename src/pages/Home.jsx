@@ -14,7 +14,16 @@ import {
     from "react-icons/fa";
 import banner from "../assets/banner.jpeg"
 import { useNavigate } from "react-router-dom";
-import { getNearbyAllRetailers } from "../services/auth.api";
+import {
+    getDrawsSchedule,
+    getNearbyAllRetailers
+}
+    from "../services/auth.api";
+import nearshop from "../assets/nearshop.png";
+import ticket from "../assets/ticket.png";
+import result from "../assets/result.png";
+import draws from "../assets/draws.png";
+import care from "../assets/care.png";
 
 const Home = () => {
 
@@ -23,17 +32,44 @@ const Home = () => {
     const [allRetailers, setAllRetailers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showAll, setShowAll] = useState(false);
+    const [drawList, setDrawList] = useState([]);
+    const [showAllResults, setShowAllResults] = useState(false);
+
+    const isMobile = screenWidth < 768;
+
+    const getCompanyColor = (companyId) => {
+        if (companyId === 1) return "linear-gradient(135deg,#22c55e,#16a34a)";
+        if (companyId === 2) return "linear-gradient(135deg,#f97316,#ea580c)";
+        if (companyId === 3) return "linear-gradient(135deg,#a855f7,#7e22ce)";
+        return "#ccc";
+    };
+
+    const formatTime = (time) => {
+        const [h, m] = time.split(":");
+        let hour = parseInt(h);
+        const ampm = hour >= 12 ? "PM" : "AM";
+        hour = hour % 12 || 12;
+        return `${hour}:${m} ${ampm}`;
+    };
+
+    useEffect(() => {
+        fetchDraws();
+        fetchAllRetailers();
+    }, []);
+
+    const fetchDraws = async () => {
+        try {
+            const res = await getDrawsSchedule();
+            setDrawList(res.data.data || []);
+        } catch (error) {
+            console.error("Draw schedule fetch error", error);
+        }
+    };
 
     useEffect(() => {
         const handleResize = () => setScreenWidth(window.innerWidth);
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-    const isMobile = screenWidth < 768;
-
-    useEffect(() => {
-        fetchAllRetailers();
     }, []);
 
     const fetchAllRetailers = async () => {
@@ -86,35 +122,100 @@ const Home = () => {
             >
                 {[
                     {
-                        icon: <FaStore size={50} />,
+                        icon: (
+                            <div style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: "100%"
+                            }}>
+                                <img
+                                    src={nearshop}
+                                    alt="Nearby Shops"
+                                    style={{ width: "120px", height: "120px", objectFit: "contain" }}
+                                />
+                            </div>
+                        ),
                         title: "Nearby Shops",
                         subtitle: "Find shops near you",
                         path: "/type-retailers?type=nearby",
                         gradient: "linear-gradient(135deg, #93c5fd, #60a5fa)",
                     },
                     {
-                        icon: <FaTicketAlt size={50} />,
+                        icon: (
+                            <div style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: "100%"
+                            }}>
+                                <img
+                                    src={ticket}
+                                    alt="Lottery Tickets"
+                                    style={{ width: "120px", height: "120px", objectFit: "contain" }}
+                                />
+                            </div>
+                        ),
                         title: "Lottery Tickets",
                         subtitle: "Buy tickets easily",
                         path: "/ticket",
                         gradient: "linear-gradient(135deg, #86efac, #4ade80)",
                     },
                     {
-                        icon: <FaClipboardList size={50} />,
+                        icon: (
+                            <div style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: "100%"
+                            }}>
+                                <img
+                                    src={result}
+                                    alt="Lottery Results"
+                                    style={{ width: "120px", height: "120px", objectFit: "contain" }}
+                                />
+                            </div>
+                        ),
                         title: "Results",
                         subtitle: "Check latest results",
                         path: "/results",
                         gradient: "linear-gradient(135deg, #fde68a, #fbbf24)",
                     },
                     {
-                        icon: <FaDice size={50} />,
+                        icon: (
+                            <div style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: "100%"
+                            }}>
+                                <img
+                                    src={draws}
+                                    alt="Lottery Draws"
+                                    style={{ width: "120px", height: "120px", objectFit: "contain" }}
+                                />
+                            </div>
+                        ),
                         title: "Draws",
                         subtitle: "Start new draw",
                         path: "/draws",
                         gradient: "linear-gradient(135deg, #fca5a5, #f87171)",
                     },
                     {
-                        icon: <FaHeadset size={50} />,
+                        icon: (
+                            <div style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: "100%"
+                            }}>
+                                <img
+                                    src={care}
+                                    alt="Customer Care"
+                                    style={{ width: "120px", height: "120px", objectFit: "contain" }}
+                                />
+                            </div>
+                        ),
                         title: "Support",
                         path: "/support",
                         subtitle: "24/7 customer help",
@@ -214,7 +315,9 @@ const Home = () => {
                     >
                         Today's Lottery Results
                     </h4>
+
                     <button
+                        onClick={() => setShowAllResults(!showAllResults)}
                         style={{
                             background: "linear-gradient(90deg, #1e40af, #dc2626)",
                             color: "#fff",
@@ -225,7 +328,7 @@ const Home = () => {
                             fontSize: "14px",
                         }}
                     >
-                        View All
+                        {showAllResults ? "Hide" : "View All"}
                     </button>
                 </div>
 
@@ -236,28 +339,27 @@ const Home = () => {
                         gap: "20px",
                     }}
                 >
-                    {["Dear Lottery", "Bangasree Lottery", "Lagna Lakshmi",].map(
-                        (item, index) => (
-                            <div
-                                key={index}
-                                style={{
-                                    background: "linear-gradient(135deg,#f97316,#ea580c)",
-                                    color: "#fff",
-                                    padding: "30px 20px",
-                                    borderRadius: "14px",
-                                    textAlign: "center",
-                                    transition: "0.3s",
-                                }}
-                            >
-                                <h5 style={{ margin: "10px 0", fontSize: "18px" }}>
-                                    {item}
-                                </h5>
-                                <p style={{ margin: 0, fontSize: "15px" }}>
-                                    11:30 AM Result
-                                </p>
-                            </div>
-                        )
-                    )}
+                    {(showAllResults ? drawList : drawList.slice(0, 4)).map((draw) => (
+                        <div
+                            key={draw.id}
+                            style={{
+                                background: getCompanyColor(draw.company_id),
+                                color: "#fff",
+                                padding: "30px 20px",
+                                borderRadius: "14px",
+                                textAlign: "center",
+                                transition: "0.3s",
+                            }}
+                        >
+                            <h5 style={{ margin: "10px 0", fontSize: "18px" }}>
+                                {draw.name}
+                            </h5>
+
+                            <p style={{ margin: 0, fontSize: "15px" }}>
+                                {formatTime(draw.time)} Result
+                            </p>
+                        </div>
+                    ))}
                 </div>
             </div>
 
